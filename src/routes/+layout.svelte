@@ -10,7 +10,7 @@
 	/**
 	 * Only show the preview banner on the following route id's.
 	 */
-	const previewRouteIds = ['/(app)/posts/[slug]'];
+	const previewRouteIds = ['/(app)/resume'];
 
 	$: ({ previewMode, previewModeEmbed: embedded } = data);
 	$: showPreviewBanner = previewMode && previewRouteIds.includes($page.route.id || '');

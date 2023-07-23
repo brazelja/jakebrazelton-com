@@ -1,5 +1,5 @@
 /**
- * This component is responsible for rendering a preview of a post inside the Studio.
+ * This component is responsible for rendering a preview of the resume inside the Studio.
  * It's imported in `sanity.config.ts´ and used as a component in the defaultDocumentNode function.
  */
 import React from 'react';
