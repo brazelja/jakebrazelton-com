@@ -1,9 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { dev } from '$app/environment';
+  import { inject } from '@vercel/analytics';
+
+  import PreviewBanner from '$lib/components/PreviewBanner.svelte';
   import type { LayoutData } from './$types';
   import '../app.css';
 
-  import PreviewBanner from '$lib/components/PreviewBanner.svelte';
+  inject({ mode: dev ? 'development' : 'production' });
 
   export let data: LayoutData;
 
