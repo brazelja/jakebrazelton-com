@@ -1,2 +1,2 @@
-export { default as Address } from './address';
-export { default as Language } from './language';
+export { Address } from './address';
+export { Language } from './language';

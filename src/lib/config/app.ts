@@ -1,5 +1,5 @@
 const app = {
-	appName: 'Personal Site'
+  appName: 'Personal Site'
 };
 
 export { app as default };
