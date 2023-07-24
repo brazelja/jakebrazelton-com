@@ -15,7 +15,8 @@ import {
   User,
   // objects
   Address,
-  Language
+  Language,
+  Skill
 } from '$lib/config/sanity/schemas';
 
 const singletonTypes = new Set<string>([User.name]);
@@ -37,14 +38,19 @@ export default defineConfig({
       User,
       // objects
       Address,
-      Language
+      Language,
+      Skill
     ],
     templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType))
   },
   plugins: [
     deskTool({
       defaultDocumentNode: (S, { schemaType }) => {
-        if (([User.name, Experience.name, Education.name] as string[]).includes(schemaType)) {
+        if (
+          ([User.name, Experience.name, Education.name, Project.name] as string[]).includes(
+            schemaType
+          )
+        ) {
           return S.document().views([
             S.view.form(),
             S.view.component(ResumePreview).title('Preview')

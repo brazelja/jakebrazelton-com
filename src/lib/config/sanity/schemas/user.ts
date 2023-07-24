@@ -1,7 +1,7 @@
 import { defineType, type SanityDocument, type Image, type PortableTextBlock } from 'sanity';
 import { UserIcon } from 'lucide-react';
 
-import type { Address, Language } from './objects';
+import type { Address, Language, Skill } from './objects';
 
 export const User = defineType({
   name: 'user',
@@ -71,16 +71,22 @@ export const User = defineType({
       ]
     },
     {
+      name: 'languages',
+      title: 'Languages',
+      type: 'array',
+      of: [{ type: 'language' }]
+    },
+    {
       name: 'interests',
       title: 'Interests',
       type: 'array',
       of: [{ type: 'string' }]
     },
     {
-      name: 'languages',
-      title: 'Languages',
+      name: 'skills',
+      title: 'Skills',
       type: 'array',
-      of: [{ type: 'language' }]
+      of: [{ type: 'skill' }]
     }
   ],
   preview: {
@@ -105,6 +111,7 @@ export type User = SanityDocument & {
     github?: string;
     linkedin?: string;
   };
-  interests: string[];
   languages: Language[];
+  interests: string[];
+  skills: Skill[];
 };

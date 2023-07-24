@@ -16,7 +16,7 @@ export const Company = defineType({
     },
     {
       name: 'logo',
-      title: 'lOGO',
+      title: 'Logo',
       type: 'image',
       options: { hotspot: true },
       validation: (Rule) => Rule.required()

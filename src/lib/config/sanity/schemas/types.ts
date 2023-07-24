@@ -1,4 +1,4 @@
-import type { Reference } from '@sanity/types';
+import type { Reference } from 'sanity';
 
 /**
  * Resolves the type of a Reference to the referenced type.
