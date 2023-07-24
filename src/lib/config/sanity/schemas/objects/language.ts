@@ -1,20 +1,20 @@
 import { defineType, type TypedObject } from 'sanity';
 import { LanguagesIcon } from 'lucide-react';
 
-const LANGUAGES = [
-  { title: 'English', value: 'english' },
-  { title: 'Spanish', value: 'spanish' },
-  { title: 'French', value: 'french' },
-  { title: 'German', value: 'german' },
-  { title: 'Italian', value: 'italian' },
-  { title: 'Portuguese', value: 'portuguese' },
-  { title: 'Russian', value: 'russian' },
-  { title: 'Chinese', value: 'chinese' },
-  { title: 'Japanese', value: 'japanese' },
-  { title: 'Korean', value: 'korean' },
-  { title: 'Arabic', value: 'arabic' },
-  { title: 'Hindi', value: 'hindi' }
-] satisfies { title: string; value: string }[];
+export const LANGUAGES = [
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Italian',
+  'Portuguese',
+  'Russian',
+  'Chinese',
+  'Japanese',
+  'Korean',
+  'Arabic',
+  'Hindi'
+];
 
 export const Language = defineType({
   name: 'language',
@@ -49,8 +49,8 @@ export const Language = defineType({
     },
     prepare({ language, native }) {
       return {
-        title: language && LANGUAGES.find((lang) => lang.value === language)?.title,
-        subtitle: native ? 'Native' : 'Not Native'
+        title: language,
+        subtitle: native ? 'Native' : ''
       };
     }
   }
@@ -59,17 +59,17 @@ export const Language = defineType({
 export type Language = TypedObject & {
   _type: (typeof Language)['name'];
   language:
-    | 'english'
-    | 'spanish'
-    | 'french'
-    | 'german'
-    | 'italian'
-    | 'portuguese'
-    | 'russian'
-    | 'chinese'
-    | 'japanese'
-    | 'korean'
-    | 'arabic'
-    | 'hindi';
+    | 'English'
+    | 'Spanish'
+    | 'French'
+    | 'German'
+    | 'Italian'
+    | 'Portuguese'
+    | 'Russian'
+    | 'Chinese'
+    | 'Japanese'
+    | 'Korean'
+    | 'Arabic'
+    | 'Hindi';
   native: boolean;
 };

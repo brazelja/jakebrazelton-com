@@ -20,7 +20,7 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
   let isPreviewing = false;
 
   // Our query may vary depending on the type.
-  if (type === 'user') {
+  if (['user', 'experience', 'education', 'project'].includes(type)) {
     isPreviewing = true;
 
     // Set the redirect path and append the isPreview query

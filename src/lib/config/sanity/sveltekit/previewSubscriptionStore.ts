@@ -81,9 +81,7 @@ function querySubscription<R = any>(options: {
   const params = writable<Params>(options.params);
 
   onMount(() => {
-    if (!enabled) {
-      return;
-    }
+    if (!enabled) return;
 
     loading.set(true);
 
@@ -92,9 +90,7 @@ function querySubscription<R = any>(options: {
 
     getCurrentUser(projectId, aborter, token)
       .then((user) => {
-        if (user) {
-          return;
-        }
+        if (user) return;
 
         // eslint-disable-next-line no-console
         console.warn('Not authenticated - preview not available');
@@ -114,9 +110,7 @@ function querySubscription<R = any>(options: {
       .finally(() => loading.set(false));
 
     return () => {
-      if (subscription) {
-        subscription.unsubscribe();
-      }
+      if (subscription) subscription.unsubscribe();
 
       aborter.abort();
     };

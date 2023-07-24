@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 import { createClient } from '@sanity/client';
 
 import { sanityConfig } from './config';
+import type { SanityDocument } from 'sanity';
 
 export const previewClient = createClient({
   ...sanityConfig,
@@ -12,7 +13,7 @@ export const client = createClient(sanityConfig);
 export const getSanityServerClient = (usePreview: boolean) => (usePreview ? previewClient : client);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function overlayDrafts(docs: any[]): any[] {
+export function overlayDrafts<T extends SanityDocument>(docs: T[]): T[] {
   const documents = docs || [];
   const overlayed = documents.reduce((map, doc) => {
     if (!doc._id) {

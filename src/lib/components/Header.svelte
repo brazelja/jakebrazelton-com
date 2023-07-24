@@ -1,3 +1,7 @@
+<script lang="ts">
+  import ThemeSwitch from './ThemeSwitch.svelte';
+</script>
+
 <header
   class="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 shadow-sm backdrop-blur"
 >
@@ -10,6 +14,7 @@
     </a>
     <nav class="flex gap-4">
       <a href="/resume" class="text-lg font-medium hover:underline hover:text-purple-400">Resume</a>
+      <ThemeSwitch class="-mt-1" />
     </nav>
   </div>
 </header>

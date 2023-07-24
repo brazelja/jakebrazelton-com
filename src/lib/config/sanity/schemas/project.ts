@@ -1,6 +1,8 @@
 import { defineType, type SanityDocument, type PortableTextBlock, type Reference } from 'sanity';
 import { CodeIcon } from 'lucide-react';
+
 import type { Company } from './company';
+import type { Skill } from './objects';
 
 export const Project = defineType({
   name: 'project',
@@ -32,64 +34,18 @@ export const Project = defineType({
       type: 'url'
     },
     {
+      name: 'startDate',
+      title: 'Start Date',
+      type: 'date',
+      validation: (rule) => rule.required()
+    },
+    {
       name: 'skills',
       title: 'Skills',
       type: 'array',
       of: [
         {
-          type: 'string',
-          options: {
-            list: [
-              // Languages
-              'JavaScript',
-              'TypeScript',
-              'HTML',
-              'CSS',
-              'Python',
-              'Java',
-              'C#',
-              // Frameworks
-              'React',
-              'Next.js',
-              'Svelte',
-              'SvelteKit',
-              'Angular',
-              'Node.js',
-              'Express',
-              'NestJS',
-              // Style Libraries
-              'SCSS',
-              'Tailwind CSS',
-              'Material UI',
-              'Headless UI',
-              // Databases
-              'MongoDB',
-              'PostgreSQL',
-              'Redis',
-              // Tools
-              'GraphQL',
-              'Apollo',
-              // Cloud
-              'AWS',
-              'Docker',
-              'Podman',
-              'Terraform',
-              'Ansible',
-              'Kubernetes',
-              'Microservices',
-              // OS
-              'Linux',
-              'Ubuntu',
-              'Manjaro',
-              'Windows',
-              // Other
-              'Git',
-              'GitHub',
-              'GitLab',
-              'DevOps',
-              'CI/CD'
-            ]
-          }
+          type: 'skill'
         }
       ]
     }
@@ -102,45 +58,5 @@ export type Project = SanityDocument & {
   company: Reference & { _def: Company };
   description: PortableTextBlock[];
   link?: string;
-  skills:
-    | 'JavaScript'
-    | 'TypeScript'
-    | 'HTML'
-    | 'CSS'
-    | 'Python'
-    | 'Java'
-    | 'C#'
-    | 'React'
-    | 'Next.js'
-    | 'Svelte'
-    | 'SvelteKit'
-    | 'Angular'
-    | 'Node.js'
-    | 'Express'
-    | 'NestJS'
-    | 'SCSS'
-    | 'Tailwind CSS'
-    | 'Material UI'
-    | 'Headless UI'
-    | 'MongoDB'
-    | 'PostgreSQL'
-    | 'Redis'
-    | 'GraphQL'
-    | 'Apollo'
-    | 'AWS'
-    | 'Docker'
-    | 'Podman'
-    | 'Terraform'
-    | 'Ansible'
-    | 'Kubernetes'
-    | 'Microservices'
-    | 'Linux'
-    | 'Ubuntu'
-    | 'Manjaro'
-    | 'Windows'
-    | 'Git'
-    | 'GitHub'
-    | 'GitLab'
-    | 'DevOps'
-    | 'CI/CD'[];
+  skills: Skill[];
 };
