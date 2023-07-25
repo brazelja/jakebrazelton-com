@@ -37,16 +37,18 @@
   <title>{$liveData?.user?.name} | Resume</title>
 </svelte:head>
 
-<div class="container">
+<div class="container px-4 md:px-8">
   <section class="rounded overflow-hidden m-4 border shadow max-w-[960px] mx-auto">
     <header class="bg-secondary dark:bg-black py-6 flex flex-col items-center justify-center gap-1">
-      <h1 class="text-4xl font-bold">{user.name}</h1>
-      <p>{user.title}</p>
+      <h1 class="text-3xl sm:text-4xl font-bold">{user.name}</h1>
+      <p class="font-medium md:font-normal">{user.title}</p>
     </header>
-    <div class="grid grid-cols-[30%_70%]">
+    <div class="grid grid-cols-1 md:grid-cols-[30%_70%]">
       <!-- Sidebar -->
       <aside class="p-4 bg-purple-400/50">
-        <Avatar class="w-40 h-40 mx-auto mb-6 shadow z-10 border-foreground border-2">
+        <Avatar
+          class="w-48 h-48 md:w-40 md:h-40 mx-auto mb-6 shadow z-10 border-foreground border-2"
+        >
           <AvatarImage src={imageUrl} alt="Jake Brazelton" />
           <AvatarFallback>
             <img src={blurUrl} alt="Jake Brazelton" />
@@ -54,61 +56,69 @@
         </Avatar>
         <Separator class="mb-6" />
         <!-- Links -->
-        <div class="w-full mb-6 space-y-2">
+        <div class="w-full mb-6 flex items-center justify-around gap-2 md:block md:space-y-2">
           <a
             href="https://jakebrazelton.com"
-            class="w-6 h-6 flex items-center gap-2 text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
+            class="flex items-center gap-2 md:text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
           >
-            <Globe2Icon class="w-5 h-5 shrink-0 stroke-foreground" />
-            jakebrazelton.com
+            <Globe2Icon class="w-8 h-8 md:w-5 md:h-5 shrink-0 stroke-foreground" />
+            <p class="hidden md:block">jakebrazelton.com</p>
           </a>
           <a
             href={'mailto:' + user?.email}
-            class="w-6 h-6 flex items-center gap-2 text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
+            class="flex items-center gap-2 md:text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
           >
             <MailIcon
-              class="w-5 h-5 shrink-0 transition-colors fill-foreground stroke-[#dfc1fd] dark:stroke-[#614586] dark:fill-foreground"
+              class="w-8 h-8 md:w-5 md:h-5 shrink-0 transition-colors fill-foreground stroke-[#dfc1fd] dark:stroke-[#614586] dark:fill-foreground"
             />
-            {user?.email}
+            <p class="hidden md:block">{user?.email}</p>
           </a>
           <a
             href={'tel:+1' + user?.phone.replaceAll(/[^0-9]/g, '')}
-            class="w-6 h-6 flex items-center gap-2 text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
+            class="flex items-center gap-2 md:text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
           >
             <PhoneIcon
-              class="w-5 h-5 shrink-0 fill-foreground dark:stroke-none dark:fill-foreground"
+              class="w-8 h-8 md:w-5 md:h-5 shrink-0 fill-foreground dark:stroke-none dark:fill-foreground"
             />
-            {user?.phone}
+            <p class="hidden md:block">{user?.phone}</p>
           </a>
           {#if user?.links?.github}
             <a
               href={user?.links?.github}
-              class="w-6 h-6 flex items-center gap-2 text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
+              class="flex items-center gap-2 md:text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
             >
-              <GithubIcon
-                class="w-5 h-5 shrink-0 stroke-foreground fill-foreground dark:stroke-foreground dark:fill-foreground"
-              />
-              {user?.links?.github.replace(/https:\/\/(www\.)?/i, '')}
+              <div
+                class="relative rounded-full w-8 h-8 md:w-5 md:h-5 overflow-hidden bg-foreground dark:bg-white"
+              >
+                <GithubIcon
+                  class="absolute -bottom-[2.7px] md:-bottom-[1.5px] left-1/2 -translate-x-1/2 w-7 h-7 md:w-4 md:h-4 stroke-[#dfc1fd] fill-[#dfc1fd] dark:stroke-[#614586] dark:fill-[#614586]"
+                />
+              </div>
+              <p class="hidden md:block">
+                {user?.links?.github.replace(/https:\/\/(www\.)?/i, '')}
+              </p>
             </a>
           {/if}
           {#if user?.links?.linkedin}
             <a
               href={user?.links?.linkedin}
-              class="w-6 h-6 flex items-center gap-2 text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
+              class="flex items-center gap-2 md:text-sm whitespace-nowrap hover:cursor-pointer hover:underline"
             >
               <LinkedinIcon
-                class="w-5 h-5 shrink-0 stroke-foreground fill-foreground dark:stroke-foreground dark:fill-foreground"
+                class="w-8 h-8 md:w-5 md:h-5 shrink-0 stroke-foreground fill-foreground dark:stroke-foreground dark:fill-foreground"
               />
-              {user?.links?.linkedin.replace(/https:\/\/(www\.)?/i, '')}
+              <p class="hidden md:block">
+                {user?.links?.linkedin.replace(/https:\/\/(www\.)?/i, '')}
+              </p>
             </a>
           {/if}
         </div>
         <!-- Languages -->
         <div class="w-full text-start mb-6">
-          <p class="text-lg font-bold mb-2">Languages</p>
-          <ul>
+          <p class="text-xl md:text-lg font-bold mb-2">Languages</p>
+          <ul class="space-y-2">
             {#each user?.languages ?? [] as { language, native }}
-              <li class="mb-1">
+              <li class="font-medium md:font-normal">
                 {language}
                 {#if native}
                   <p class="inline ml-1 text-foreground/75">(Native)</p>
@@ -119,30 +129,30 @@
         </div>
         <!-- Interests -->
         <div class="w-full text-start mb-6">
-          <p class="text-lg font-bold mb-2">Interests</p>
+          <p class="text-xl md:text-lg font-bold mb-2">Interests</p>
           <ul class="space-y-2">
             {#each user?.interests ?? [] as interest}
-              <li>{interest}</li>
+              <li class="font-medium md:font-normal">{interest}</li>
             {/each}
           </ul>
         </div>
         <!-- Skills -->
         <div class="w-full text-start mb-6">
-          <p class="text-lg font-bold mb-2">Skills</p>
+          <p class="text-xl md:text-lg font-bold mb-2">Skills</p>
           <ul class="space-y-2">
             {#each user?.skills ?? [] as skill}
-              <li>{skill}</li>
+              <li class="font-medium md:font-normal">{skill}</li>
             {/each}
           </ul>
         </div>
       </aside>
       <!-- Main Block -->
-      <section class="p-6 dark:bg-secondary space-y-6">
+      <section class="p-4 md:p-6 dark:bg-secondary space-y-6">
         <!-- Experiences -->
         <div class="w-full text-start">
-          <h2 class="text-xl font-bold uppercase tracking-wider">Experiences</h2>
+          <h2 class="text-2xl md:text-xl font-bold uppercase tracking-wider">Experiences</h2>
           <Separator class="mb-4" />
-          <ul class="space-y-6">
+          <ul class="space-y-10 md:space-y-6">
             {#each experiences ?? [] as experience}
               <li>
                 <div class="flex mb-2">
@@ -150,11 +160,11 @@
                     <p class="text-lg leading-snug font-semibold">{experience.title}</p>
                     <a
                       href={experience.company.website}
-                      class="text-sm text-foreground/75 hover:cursor-pointer hover:underline"
+                      class="md:text-sm text-foreground/75 underline decoration-dotted md:no-underline hover:cursor-pointer hover:underline"
                       >{experience.company.name}</a
                     >
                   </span>
-                  <p class="inline text-sm text-foreground/75 ml-auto">
+                  <p class="inline md:text-sm text-foreground/75 ml-auto">
                     {#if !experience.endDate}
                       {new Date(experience.startDate).getFullYear()} - Present
                     {:else if experience.startDate.split('-')[0] === experience.endDate.split('-')[0]}
@@ -169,7 +179,7 @@
                 <div class="contents text-sm">
                   <PortableText value={experience.description} />
                 </div>
-                <ul class="flex gap-2 flex-wrap mt-2">
+                <ul class="flex gap-x-4 gap-y-4 md:gap-x-2 md:gap-y-2 flex-wrap mt-4 md:mt-2">
                   {#each experience?.skills ?? [] as skill}
                     <li class="bg-accent px-3 py-[0.2rem] text-sm rounded-full">{skill}</li>
                   {/each}
@@ -180,19 +190,19 @@
         </div>
         <!-- Education -->
         <div class="w-full text-start">
-          <h2 class="text-xl font-bold uppercase tracking-wider">Education</h2>
+          <h2 class="text-2xl md:text-xl font-bold uppercase tracking-wider">Education</h2>
           <Separator class="mb-4" />
-          <ul class="space-y-4">
+          <ul class="space-y-10 md:space-y-6">
             {#each education ?? [] as degree}
               <li>
                 <div class="flex mb-2">
                   <span>
                     <p class="text-lg leading-snug font-semibold">{degree.degree}</p>
-                    <p class="text-sm text-foreground/75">
+                    <p class="md:text-sm text-foreground/75">
                       {degree.school}
                     </p>
                   </span>
-                  <p class="inline text-sm text-foreground/75 ml-auto">
+                  <p class="inline md:text-sm text-foreground/75 ml-auto">
                     {#if !degree.endDate}
                       {new Date(degree.startDate).getFullYear()} - Present
                     {:else if degree.startDate.split('-')[0] === degree.endDate.split('-')[0]}
@@ -213,9 +223,9 @@
         </div>
         <!-- Projects -->
         <div class="w-full text-start">
-          <h2 class="text-xl font-bold uppercase tracking-wider">Projects</h2>
+          <h2 class="text-2xl md:text-xl font-bold uppercase tracking-wider">Projects</h2>
           <Separator class="mb-4" />
-          <ul class="space-y-4">
+          <ul class="space-y-10 md:space-y-6">
             {#each projects ?? [] as project}
               <li>
                 <div class="flex flex-col items-start mb-2">
@@ -223,7 +233,8 @@
                     this={project.link ? 'a' : 'p'}
                     href={project.link}
                     class={clsx('text-lg leading-snug font-semibold', {
-                      'hover:cursor-pointer hover:underline': project.link
+                      'underline decoration-dotted md:no-underline hover:cursor-pointer hover:underline':
+                        project.link
                     })}
                   >
                     {project.name}
@@ -231,7 +242,7 @@
                   {#if project.company}
                     <a
                       href={project.company.website}
-                      class="text-sm text-foreground/75 hover:cursor-pointer hover:underline"
+                      class="md:text-sm text-foreground/75 underline decoration-dotted md:no-underline hover:cursor-pointer hover:underline"
                     >
                       {project.company.name}
                     </a>
@@ -240,7 +251,7 @@
                 <div class="contents text-sm">
                   <PortableText value={project.description} />
                 </div>
-                <ul class="flex gap-2 flex-wrap mt-2">
+                <ul class="flex gap-x-4 gap-y-4 md:gap-x-2 md:gap-y-2 flex-wrap mt-4 md:mt-2">
                   {#each project?.skills ?? [] as skill}
                     <li class="bg-accent px-3 py-[0.2rem] text-sm rounded-full">{skill}</li>
                   {/each}
