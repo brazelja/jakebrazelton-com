@@ -23,7 +23,8 @@ module.exports = {
         }
       },
       animation: {
-        revolve: 'revolve 10s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        revolve: 'revolve 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        '-revolve': 'revolve 10s cubic-bezier(0.4, 0, 0.6, 1) 1s reverse infinite'
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -70,5 +71,8 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require('tailwindcss-animate')],
+  future: {
+    hoverOnlyWhenSupported: true
+  }
 };
