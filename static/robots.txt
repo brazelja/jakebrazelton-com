@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://jakebrazelton.com/sitemap.xml
+
+Disallow: /privacy*
+Disallow: /terms*
