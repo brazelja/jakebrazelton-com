@@ -1,29 +1,20 @@
-import groq from 'groq';
-
-import { getSanityServerClient } from '$lib/config/sanity/client';
-import type { User } from '$lib/config/sanity/schemas';
 import { spotifyClient } from '$lib/server/spotify/client';
 import { githubClient } from '$lib/server/github/client';
 
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ parent }) => {
-  const { previewMode } = await parent();
-
-  const { user } = await getSanityServerClient(previewMode).fetch<{
-    user: Pick<User, 'interests'>;
-  }>(groq`
-    {
-      'user': *[_type == "user"] | order(_updatedAt desc) [0] { interests },
-    }
-  `);
-
+export const load = (async ({ fetch }) => {
   return {
-    previewMode,
-    initialData: {
-      user
-    },
-    topArtists: await spotifyClient.getArtists(),
-    repositories: await githubClient.getStarredRepos()
+    topArtists: spotifyClient.getArtists(),
+    repositories: githubClient.getStarredRepos(),
+    videoGames: fetch('/api/video-games').then(
+      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    ),
+    comics: fetch('/api/comics').then(
+      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    ),
+    horrorMovies: fetch('/api/horror').then(
+      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    )
   };
 }) satisfies PageServerLoad;

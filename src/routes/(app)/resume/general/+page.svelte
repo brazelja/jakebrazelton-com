@@ -33,13 +33,13 @@
   <h2 class="text-3xl font-semibold">General</h2>
 </header>
 
-<section class="rounded overflow-hidden border p-4 mb-6">
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
   <h3 class="text-2xl font-semibold mb-2">About</h3>
   <Separator class="mb-4" />
   <PortableText value={user.bio} />
 </section>
 
-<section class="rounded overflow-hidden border p-4 mb-6">
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
   <h3 class="text-2xl font-semibold mb-2">Connect</h3>
   <Separator class="mb-4" />
   <ul class="space-y-4 mb-4">
@@ -102,7 +102,7 @@
   </ul>
 </section>
 
-<section class="rounded overflow-hidden border p-4">
+<section class="rounded overflow-hidden border p-4 bg-muted/25">
   <h3 class="text-2xl font-semibold mb-2">Languages</h3>
   <Separator class="mb-4" />
   <ul class="space-y-4 mb-4">

@@ -1,9 +1,7 @@
 <script lang="ts">
-  import groq from 'groq';
   import { BookMarkedIcon, GitForkIcon, StarIcon } from 'lucide-svelte';
   import clsx from 'clsx';
 
-  import { previewSubscription } from '$lib/config/sanity';
   import { formatNumber } from '$lib/utils/format-number';
   import { Separator } from '$components/ui/separator';
   import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$components/ui/card';
@@ -13,24 +11,14 @@
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, topArtists, repositories } = data);
-  $: ({ data: liveData } = previewSubscription(
-    groq`
-    {
-      'user': *[_type == "user"] | order(_updatedAt desc) [0] { interests },
-    }
-  `,
-    { initialData: { user: initialData.user }, enabled: !!previewMode }
-  ));
-
-  $: ({ user } = $liveData);
+  $: ({ topArtists, repositories, videoGames, comics, horrorMovies } = data);
 </script>
 
 <header class="mb-6">
   <h2 class="text-3xl font-semibold">Interests</h2>
 </header>
 
-<section class="rounded overflow-hidden border p-4 mb-6">
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
   <h3 class="text-2xl font-semibold mb-2">Music</h3>
   <Separator class="mb-4" />
   <div class="grid grid-cols-5 justify-items-center gap-2">
@@ -54,7 +42,7 @@
   </div>
 </section>
 
-<section class="rounded overflow-hidden border p-4 mb-6">
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
   <h3 class="text-2xl font-semibold mb-2">Starred Repositories</h3>
   <Separator class="mb-4" />
   <div class="grid grid-cols-2 gap-4">
@@ -101,10 +89,62 @@
   </div>
 </section>
 
-<section class="rounded overflow-hidden border p-4 mb-6">
-  <ul class="space-y-2">
-    {#each user?.interests ?? [] as interest}
-      <li class="font-medium md:font-normal">{interest}</li>
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
+  <h3 class="text-2xl font-semibold mb-2">Video Games</h3>
+  <Separator class="mb-4" />
+  <div class="grid grid-cols-5 justify-items-center gap-2">
+    {#each videoGames as game}
+      <a
+        href={game.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded overflow-hidden hover:cursor-pointer"
+        title={game.name}
+      >
+        <Avatar class="w-40 h-auto aspect-[6.5/10] as rounded-none">
+          <AvatarImage src={game.image} alt={game.name} />
+        </Avatar>
+      </a>
     {/each}
-  </ul>
+  </div>
+</section>
+
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
+  <h3 class="text-2xl font-semibold mb-2">Comics</h3>
+  <Separator class="mb-4" />
+  <div class="grid grid-cols-5 justify-items-center gap-y-4">
+    {#each comics as comic}
+      <a
+        href={comic.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded overflow-hidden hover:cursor-pointer"
+        title={comic.name}
+      >
+        <Avatar class="w-40 h-auto aspect-[6.5/10] as rounded-none">
+          <AvatarImage src={comic.image} alt={comic.name} />
+        </Avatar>
+      </a>
+    {/each}
+  </div>
+</section>
+
+<section class="rounded overflow-hidden border p-4 mb-6 bg-muted/25">
+  <h3 class="text-2xl font-semibold mb-2">Horror</h3>
+  <Separator class="mb-4" />
+  <div class="grid grid-cols-5 justify-items-center gap-y-4">
+    {#each horrorMovies as movie}
+      <a
+        href={movie.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded overflow-hidden hover:cursor-pointer"
+        title={movie.name}
+      >
+        <Avatar class="w-40 h-auto aspect-[6.5/10] as rounded-none">
+          <AvatarImage src={movie.image} alt={movie.name} />
+        </Avatar>
+      </a>
+    {/each}
+  </div>
 </section>

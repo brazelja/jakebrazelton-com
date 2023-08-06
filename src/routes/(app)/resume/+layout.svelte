@@ -50,7 +50,7 @@
 </div>
 <Separator class="mb-12" />
 <div class="container min-h-[calc(100dvh_-_8.5rem_-_11rem_-_3rem_-_2px)]">
-  <section class="grid grid-cols-1 md:grid-cols-[240px_auto]">
+  <section class="grid grid-cols-1 md:grid-cols-[240px_auto] md:gap-4">
     <aside class="relative">
       <ul class="sticky top-24 grid auto-rows-auto text-muted-foreground">
         {#each items as item}
