@@ -51,7 +51,7 @@
         </nav>
       </SheetContent>
     </Sheet>
-
+    <!-- Desktop -->
     <a href="/" class="hidden md:flex group relative items-center text-2xl font-medium">
       <span
         class="font-bold transition-colors bg-gradient-to-br from-purple-600 via-purple-400 to-yellow-600 bg-clip-text hover:text-transparent"

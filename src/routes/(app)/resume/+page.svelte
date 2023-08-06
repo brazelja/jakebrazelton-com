@@ -38,7 +38,7 @@
 </svelte:head>
 
 <div class="container px-4 md:px-8">
-  <section class="rounded overflow-hidden m-4 border shadow max-w-[960px] mx-auto">
+  <section class="rounded overflow-hidden border shadow max-w-[960px] mx-auto">
     <header class="bg-secondary dark:bg-black py-6 flex flex-col items-center justify-center gap-1">
       <h1 class="text-3xl sm:text-4xl font-bold">{user.name}</h1>
       <p class="font-medium md:font-normal">{user.title}</p>

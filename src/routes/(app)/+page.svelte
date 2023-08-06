@@ -18,7 +18,7 @@
 </svelte:head>
 
 <section>
-  <div class="container relative h-[calc(100dvh_-_8.5rem_-_1px)]">
+  <div class="container relative min-h-[calc(100dvh_-_8.5rem_-_1px)]">
     <div
       class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
     >
