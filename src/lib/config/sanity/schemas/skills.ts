@@ -9,14 +9,68 @@ export const Skills = defineType({
   icon: CheckIcon,
   fields: [
     {
+      name: 'qualifications',
+      title: 'Qualifications',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
       name: 'languages',
       title: 'Languages',
       type: 'array',
       of: [{ type: 'skill' }]
     },
     {
-      name: 'frameworks',
-      title: 'Frameworks',
+      name: 'frontendFrameworks',
+      title: 'Frontend Frameworks',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'backendFrameworks',
+      title: 'Backend Frameworks',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'graphql',
+      title: 'GraphQL',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'stateManagement',
+      title: 'State Management',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'databases',
+      title: 'Databases',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'versionControlSystems',
+      title: 'Version Control Systems',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'automation',
+      title: 'Automation',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'cloud',
+      title: 'Cloud Platforms',
+      type: 'array',
+      of: [{ type: 'skill' }]
+    },
+    {
+      name: 'containerization',
+      title: 'Containerization',
       type: 'array',
       of: [{ type: 'skill' }]
     }
@@ -32,6 +86,15 @@ export const Skills = defineType({
 
 export type Skills = SanityDocument & {
   _type: (typeof Skills)['name'];
+  qualifications: Array<Skill>;
   languages: Array<Skill>;
-  frameworks: Array<Skill>;
+  frontendFrameworks: Array<Skill>;
+  backendFrameworks: Array<Skill>;
+  graphql: Array<Skill>;
+  stateManagement: Array<Skill>;
+  databases: Array<Skill>;
+  versionControlSystems: Array<Skill>;
+  automation: Array<Skill>;
+  cloud: Array<Skill>;
+  containerization: Array<Skill>;
 };

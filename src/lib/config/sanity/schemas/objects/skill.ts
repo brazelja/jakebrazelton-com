@@ -19,8 +19,7 @@ export const Skill = defineType({
       type: 'image',
       options: {
         hotspot: true
-      },
-      validation: (Rule) => Rule.required()
+      }
     },
     {
       name: 'link',
@@ -31,7 +30,7 @@ export const Skill = defineType({
   ],
   preview: {
     select: {
-      name: 'name',
+      title: 'name',
       media: 'image'
     }
   }

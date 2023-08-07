@@ -25,7 +25,7 @@
   $: imageUrl = urlForImage(user?.picture).width(408).height(408).url();
   $: blurUrl = urlForImage(user?.picture).width(408).height(408).blur(100).url();
 
-  const items = ['General', 'Interests', 'Skills', 'Experiences', 'Education', 'Projects'];
+  const items = ['General', 'Interests', 'Skills', 'Experience', 'Education', 'Projects'];
 
   $: subtitle = items.find((item) => $page.route.id === `/(app)/resume/${item.toLowerCase()}`);
 </script>
@@ -35,14 +35,14 @@
 </svelte:head>
 
 <div class="container">
-  <header class="flex justify-start items-center w-full py-8">
+  <header class="flex flex-col md:flex-row justify-start items-center w-full py-8">
     <Avatar class="w-28 h-28 shadow">
       <AvatarImage src={imageUrl} alt="Jake Brazelton" />
       <AvatarFallback>
         <img src={blurUrl} alt="Jake Brazelton" />
       </AvatarFallback>
     </Avatar>
-    <div class="flex flex-col ml-4">
+    <div class="flex flex-col mt-4 items-center md:items-start md:mt-0 md:ml-4">
       <h1 class="text-3xl sm:text-4xl font-bold">{user.name}</h1>
       <p class="font-medium md:font-normal">{user.title}</p>
     </div>

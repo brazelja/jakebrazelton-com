@@ -24,6 +24,49 @@
   $: ({ skills } = $liveData);
 
   let filter = '';
+
+  $: sections = [
+    {
+      label: 'Languages',
+      items: skills?.languages ?? []
+    },
+    {
+      label: 'Frontend Frameworks',
+      items: skills?.frontendFrameworks ?? []
+    },
+    {
+      label: 'GraphQL',
+      items: skills?.graphql ?? []
+    },
+    {
+      label: 'State Management',
+      items: skills?.stateManagement ?? []
+    },
+    {
+      label: 'Backend Frameworks',
+      items: skills?.backendFrameworks ?? []
+    },
+    {
+      label: 'Databases',
+      items: skills?.databases ?? []
+    },
+    {
+      label: 'Version Control Systems',
+      items: skills?.versionControlSystems ?? []
+    },
+    {
+      label: 'Automation',
+      items: skills?.automation ?? []
+    },
+    {
+      label: 'Cloud Platforms',
+      items: skills?.cloud ?? []
+    },
+    {
+      label: 'Containerization',
+      items: skills?.containerization ?? []
+    }
+  ];
 </script>
 
 <header class="mb-6">
@@ -39,86 +82,40 @@
   </div>
 </div>
 
-<section class="rounded overflow-hidden border p-4 mb-4 bg-muted/25">
-  <h3 class="text-2xl font-semibold mb-2">Languages</h3>
+<section class="rounded overflow-hidden border p-4 mb-8 bg-muted/25">
+  <h3 class="text-2xl font-semibold mb-2">Qualifications</h3>
   <Separator class="mb-4" />
   <ul class="grid grid-cols-3 gap-4">
-    {#each skills.languages.filter((s) => s.name
+    {#each (skills.qualifications ?? []).filter((s) => s.name
         .toLowerCase()
-        .includes(filter.toLowerCase())) as language}
-      <a href={language.link} class="content">
-        <li
-          class="font-medium md:font-normal border rounded p-3 flex items-center gap-2 hover:bg-muted/50"
-        >
-          <Avatar class="w-8 h-8 border bg-muted">
-            <AvatarImage
-              src={urlForImage(language.image).width(50).height(50).url()}
-              alt={language.name}
-            />
-          </Avatar>
-          {language.name}
-        </li>
-      </a>
-    {/each}
-  </ul>
-</section>
-
-<section class="rounded overflow-hidden border p-4 mb-4 bg-muted/25">
-  <h3 class="text-2xl font-semibold mb-2">Frameworks</h3>
-  <Separator class="mb-4" />
-  <ul class="grid grid-cols-3 gap-4">
-    {#each skills.frameworks.filter((s) => s.name
-        .toLowerCase()
-        .includes(filter.toLowerCase())) as language}
-      <a href={language.link} class="content">
-        <li
-          class="font-medium md:font-normal border rounded p-3 flex items-center gap-2 hover:bg-muted/50"
-        >
-          <Avatar class="w-8 h-8 border bg-muted">
-            <AvatarImage
-              src={urlForImage(language.image).width(50).height(50).url()}
-              alt={language.name}
-            />
-          </Avatar>
-          {language.name}
-        </li>
-      </a>
-    {/each}
-  </ul>
-</section>
-
-<!-- <section class="rounded overflow-hidden border p-4 mb-4 bg-muted/25">
-  <h3 class="text-2xl font-semibold mb-2">Frameworks</h3>
-  <Separator class="mb-4" />
-  <ul class="grid grid-cols-3 gap-4">
-    {#each filteredSkills.filter((s) => s.type === 'framework') as skill}
-      <li class="font-medium md:font-normal border rounded p-3">
-        {skill.name}
+        .includes(filter.toLowerCase())) as item}
+      <li class="font-medium md:font-normal border rounded p-3 flex items-center gap-2">
+        {item.name}
       </li>
     {/each}
   </ul>
 </section>
 
-<section class="rounded overflow-hidden border p-4 mb-4 bg-muted/25">
-  <h3 class="text-2xl font-semibold mb-2">Databases</h3>
-  <Separator class="mb-4" />
-  <ul class="grid grid-cols-3 gap-4">
-    {#each filteredSkills.filter((s) => s.type === 'database') as skill}
-      <li class="font-medium md:font-normal border rounded p-3">
-        {skill.name}
-      </li>
-    {/each}
-  </ul>
-</section>
-
-<section class="rounded overflow-hidden border p-4 mb-4 bg-muted/25">
-  <h3 class="text-2xl font-semibold mb-2">GraphQL</h3>
-  <Separator class="mb-4" />
-  <ul class="grid grid-cols-3 gap-4">
-    {#each filteredSkills.filter((s) => s.type === 'graphql') as skill}
-      <li class="font-medium md:font-normal border rounded p-3">
-        {skill.name}
-      </li>
-    {/each}
-  </ul>
-</section> -->
+{#each sections as { label, items }}
+  <section class="rounded overflow-hidden border p-4 mb-8 bg-muted/25">
+    <h3 class="text-2xl font-semibold mb-2">{label}</h3>
+    <Separator class="mb-4" />
+    <ul class="grid grid-cols-3 gap-4">
+      {#each items.filter((s) => s.name.toLowerCase().includes(filter.toLowerCase())) as item}
+        <a href={item.link} class="content">
+          <li
+            class="font-medium md:font-normal border rounded p-3 flex items-center gap-2 hover:bg-muted/50"
+          >
+            <Avatar class="w-8 h-8 border bg-muted">
+              <AvatarImage
+                src={urlForImage(item.image).width(50).height(50).url()}
+                alt={item.name}
+              />
+            </Avatar>
+            {item.name}
+          </li>
+        </a>
+      {/each}
+    </ul>
+  </section>
+{/each}
