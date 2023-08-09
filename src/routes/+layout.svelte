@@ -14,7 +14,7 @@
   /**
    * Only show the preview banner on the following route id's.
    */
-  const previewRouteIds = ['/(app)/resume'];
+  const previewRouteIds = ['/(app)/about'];
 
   $: ({ previewMode, previewModeEmbed: embedded } = data);
   $: showPreviewBanner = previewMode && previewRouteIds.includes($page.route.id || '');

@@ -43,9 +43,9 @@
           </SheetClose>
           <Separator />
           <SheetClose>
-            <a href="/resume" class="text-xl font-medium hover:underline hover:text-purple-400"
-              >Resume</a
-            >
+            <a href="/about" class="text-xl font-medium hover:underline hover:text-purple-400">
+              About
+            </a>
           </SheetClose>
           <Separator />
         </nav>
@@ -61,8 +61,8 @@
     </a>
     <nav class="flex gap-4">
       <a
-        href="/resume"
-        class="hidden md:block text-lg font-medium hover:underline hover:text-purple-400">Resume</a
+        href="/about"
+        class="hidden md:block text-lg font-medium hover:underline hover:text-purple-400">About</a
       >
       <ThemeSwitch class="-mt-1" />
     </nav>

@@ -3,7 +3,14 @@ import type { RequestHandler } from './$types';
 export const prerender = true;
 
 export const GET: RequestHandler = () => {
-  const pages = ['resume'];
+  const pages = [
+    'about/general',
+    'about/interests',
+    'about/skills',
+    '/about/experience',
+    '/about/education',
+    '/about/projects'
+  ];
   const body = sitemap(pages);
 
   return new Response(body, {

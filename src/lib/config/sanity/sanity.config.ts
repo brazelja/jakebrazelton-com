@@ -12,6 +12,7 @@ import {
   Education,
   Experience,
   Project,
+  School,
   Skills,
   User,
   // objects
@@ -36,6 +37,7 @@ export default defineConfig({
       Education,
       Experience,
       Project,
+      School,
       Skills,
       User,
       // objects

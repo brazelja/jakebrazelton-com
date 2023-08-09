@@ -27,7 +27,7 @@
 
   const items = ['General', 'Interests', 'Skills', 'Experience', 'Education', 'Projects'];
 
-  $: subtitle = items.find((item) => $page.route.id === `/(app)/resume/${item.toLowerCase()}`);
+  $: subtitle = items.find((item) => $page.route.id === `/(app)/about/${item.toLowerCase()}`);
 </script>
 
 <svelte:head>
@@ -57,10 +57,10 @@
           <li
             class={clsx(
               'rounded transition-colors hover:cursor-pointer hover:text-foreground hover:bg-muted',
-              { 'text-foreground': $page.route.id === `/(app)/resume/${item.toLowerCase()}` }
+              { 'text-foreground': $page.route.id === `/(app)/about/${item.toLowerCase()}` }
             )}
           >
-            <a href="/resume/{item.toLowerCase()}" class="inline-block w-full px-3 py-2">{item}</a>
+            <a href="/about/{item.toLowerCase()}" class="inline-block w-full px-3 py-2">{item}</a>
           </li>
         {/each}
       </ul>

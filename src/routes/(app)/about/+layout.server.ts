@@ -4,11 +4,8 @@ import { getSanityServerClient } from '$lib/config/sanity/client';
 import type { User } from '$lib/config/sanity/schemas';
 
 import type { LayoutServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
 
-export const load = (async ({ parent, route }) => {
-  if (route.id === '/(app)/resume') throw redirect(307, '/resume/general');
-
+export const load = (async ({ parent }) => {
   const { previewMode } = await parent();
 
   const { user } = await getSanityServerClient(previewMode).fetch<{

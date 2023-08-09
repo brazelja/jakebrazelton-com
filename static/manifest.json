@@ -21,10 +21,10 @@
       "icons": [{ "src": "/icons/icon-x96.png", "sizes": "96x96" }]
     },
     {
-      "name": "Resume",
-      "short_name": "Resume",
-      "description": "Resume page",
-      "url": "/resume",
+      "name": "About",
+      "short_name": "About",
+      "description": "About page",
+      "url": "/about",
       "icons": [{ "src": "/icons/icon-x96.png", "sizes": "96x96" }]
     }
   ]

@@ -1,5 +1,6 @@
-import { defineType, type SanityDocument } from 'sanity';
+import { defineType, type PortableTextBlock, type Reference, type SanityDocument } from 'sanity';
 import { GraduationCapIcon } from 'lucide-react';
+import type { School } from './school';
 
 export const Education = defineType({
   name: 'education',
@@ -10,7 +11,8 @@ export const Education = defineType({
     {
       name: 'school',
       title: 'School',
-      type: 'string',
+      type: 'reference',
+      to: [{ type: 'school' }],
       validation: (rule) => rule.required()
     },
     {
@@ -32,18 +34,19 @@ export const Education = defineType({
       type: 'date'
     },
     {
-      name: 'note',
-      title: 'Note',
-      type: 'string'
+      name: 'details',
+      title: 'Details',
+      type: 'array',
+      of: [{ type: 'block' }]
     }
   ]
 });
 
 export type Education = SanityDocument & {
   _type: (typeof Education)['name'];
-  school: string;
+  school: Reference & { _def: School };
   degree: string;
   startDate: string;
   endDate?: string;
-  note?: string;
+  details?: PortableTextBlock[];
 };
