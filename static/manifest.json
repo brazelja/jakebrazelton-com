@@ -18,14 +18,14 @@
       "short_name": "Home",
       "description": "Home page",
       "url": "/",
-      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "About",
       "short_name": "About",
       "description": "About page",
       "url": "/about",
-      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
     }
   ]
 }
