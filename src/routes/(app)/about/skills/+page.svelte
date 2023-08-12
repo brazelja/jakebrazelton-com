@@ -80,27 +80,27 @@
   <h2 class="text-3xl font-semibold">Skills</h2>
 </header>
 
-<div class="mx-auto mb-4 flex gap-2 w-full">
+<div class="mx-auto mb-4 flex w-full gap-2">
   <div class="relative grow">
     <Input type="search" bind:value={filter} placeholder="Filter..." />
     {#if !filter}
-      <SearchIcon class="absolute right-2 top-2 h-5 w-5 stroke-2 opacity-50" />
+      <SearchIcon class="absolute right-2 top-1/4 h-5 w-5 stroke-2 opacity-50" />
     {/if}
   </div>
 </div>
 
 <div in:fly={{ delay: 150, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">Qualifications</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <ul class="grid grid-cols-3 gap-4">
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <ul class="grid grid-cols-1 gap-4 md:grid-cols-3">
         {#each (skills.qualifications ?? []).filter((s) => s.name
             .toLowerCase()
             .includes(filter.toLowerCase())) as item (item.name)}
-          <li class="font-medium md:font-normal border rounded p-3 flex items-center gap-2">
+          <li class="flex items-center gap-2 rounded border p-3 font-medium md:font-normal">
             {item.name}
           </li>
         {/each}
@@ -113,20 +113,20 @@
   {#if ready}
     <div in:fly={{ delay: 150 + i * 50, duration: 300, easing: quintOut, y: 200 }}>
       <Card class="mb-8 bg-muted/25">
-        <CardHeader class="flex">
+        <CardHeader class="flex p-4 md:p-6">
           <CardTitle class="text-2xl">{label}</CardTitle>
         </CardHeader>
         <Separator class="mb-4" />
-        <CardContent>
-          <ul class="grid grid-cols-3 gap-4">
+        <CardContent class="p-4 !pt-0 md:p-6">
+          <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3">
             {#each items.filter((s) => s.name
                 .toLowerCase()
                 .includes(filter.toLowerCase())) as item (item.name)}
               <a href={item.link} class="content">
                 <li
-                  class="font-medium md:font-normal border rounded p-3 flex items-center gap-2 hover:bg-muted/50"
+                  class="flex h-full items-center gap-2 rounded border p-3 text-sm font-medium hover:bg-muted/50 sm:text-base md:font-normal"
                 >
-                  <Avatar class="w-8 h-8 border bg-muted">
+                  <Avatar class="h-8 w-8 border bg-muted">
                     <AvatarImage
                       src={urlForImage(item.image).width(50).height(50).url()}
                       alt={item.name}

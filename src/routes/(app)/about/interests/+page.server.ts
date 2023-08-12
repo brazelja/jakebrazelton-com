@@ -7,14 +7,17 @@ export const load = (async ({ fetch }) => {
   return {
     topArtists: spotifyClient.getArtists(),
     repositories: githubClient.getStarredRepos(),
-    videoGames: fetch('/api/video-games').then(
-      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    videoGames: fetch('/api/video-games').then<{ name: string; image: string; url: string }[]>(
+      (res) => res.json() 
     ),
-    comics: fetch('/api/comics').then(
-      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    books: fetch('/api/books').then<{ name: string; author: string; image: string; url: string }[]>(
+      (res) => res.json() 
     ),
-    horrorMovies: fetch('/api/horror').then(
-      (res) => res.json() as Promise<{ name: string; image: string; url: string }[]>
+    comics: fetch('/api/comics').then<{ name: string; image: string; url: string }[]>(
+      (res) => res.json() 
+    ),
+    horrorMovies: fetch('/api/horror').then<{ name: string; image: string; url: string }[]>(
+      (res) => res.json() 
     )
   };
 }) satisfies PageServerLoad;

@@ -9,7 +9,7 @@ const VIDEO_GAMES = [
   },
   {
     name: 'God of War Ragnarok',
-    image: '/images/video-games/god-of-war-ragnarok.jpg',
+    image: '/images/video-games/god-of-war-ragnarok.webp',
     url: 'https://www.playstation.com/en-us/games/god-of-war-ragnarok/'
   },
   {
@@ -24,8 +24,33 @@ const VIDEO_GAMES = [
   },
   {
     name: 'Horizon Forbidden West',
-    image: '/images/video-games/horizon-forbidden-west.jpg',
+    image: '/images/video-games/horizon-forbidden-west.webp',
     url: 'https://www.playstation.com/en-us/games/horizon-forbidden-west/'
+  },
+  {
+    name: 'Pyre',
+    image: '/images/video-games/pyre.webp',
+    url: 'https://www.supergiantgames.com/games/pyre/'
+  },
+  {
+    name: 'Hades',
+    image: '/images/video-games/hades.webp',
+    url: 'https://www.supergiantgames.com/games/hades/'
+  },
+  {
+    name: 'A Plague Tale: Innocence',
+    image: '/images/video-games/a-plague-tale-innocence.avif',
+    url: 'https://www.focus-entmt.com/en/games/a-plague-tale-innocence'
+  },
+  {
+    name: 'It Takes Two',
+    image: '/images/video-games/it-takes-two.webp',
+    url: 'https://www.hazelight.se/games/it-takes-two/'
+  },
+  {
+    name: 'Smite',
+    image: '/images/video-games/smite.webp',
+    url: 'https://www.smitegame.com/'
   }
 ];
 

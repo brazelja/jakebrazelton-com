@@ -40,20 +40,20 @@
 </script>
 
 <header class="mb-6">
-  <h2 class="text-3xl font-semibold">Education</h2>
+  <h2 class="text-3xl font-semibold">Projects</h2>
 </header>
 
 {#each projects as project, i}
   {#if ready}
     <div in:fly={{ delay: 150 + i * 50, duration: 300, easing: quintOut, y: 200 }}>
       <Card class="mb-8 bg-muted/25">
-        <CardHeader class="flex flex-row w-full justify-between">
+        <CardHeader class="flex w-full flex-row flex-wrap justify-between p-4 md:p-6">
           <div class="space-y-2">
             <CardTitle class="text-2xl">
               {project.name}
             </CardTitle>
-            <CardDescription class="flex items-center gap-2 text-lg">
-              <Avatar class="w-8 h-8">
+            <CardDescription class="flex items-center gap-2 text-sm md:text-lg">
+              <Avatar class="h-8 w-8">
                 <AvatarImage
                   src={urlForImage(project.company.logo).width(200).height(200).url()}
                   alt={project.company.name}
@@ -71,13 +71,16 @@
             </CardDescription>
           </div>
           {#if project.link}
-            <a href={project.link} class="h-fit text-muted-foreground hover:underline">
+            <a
+              href={project.link}
+              class="h-fit grow text-end text-muted-foreground hover:underline"
+            >
               {project.link}
             </a>
           {/if}
         </CardHeader>
         <Separator class="mb-4" />
-        <CardContent>
+        <CardContent class="p-4 !pt-0 md:p-6">
           <PortableText
             value={project.description}
             components={{
@@ -92,7 +95,9 @@
             }}
           />
           {#if project?.images && project.images.length > 0}
-            <div class="flex h-40 gap-4 mt-4">
+            <div
+              class="mt-4 flex h-40 flex-wrap items-center justify-center gap-4 sm:justify-start"
+            >
               {#each project.images as image}
                 <a href={urlForImage(image).url()} class="contents">
                   <img
@@ -106,15 +111,18 @@
           {/if}
         </CardContent>
         <CardFooter>
-          <ul class="flex gap-x-4 gap-y-4 md:gap-x-2 md:gap-y-2 flex-wrap mt-4 md:mt-2">
+          <ul class="mt-4 flex flex-wrap gap-4 md:mt-2 md:gap-2">
             {#each project?.skills ?? [] as skill}
               <li
-                class={cn('bg-accent pl-1 pr-3 py-[0.1rem] rounded-full flex items-center gap-2', {
-                  'pl-3': !skill.image
-                })}
+                class={cn(
+                  'flex items-center gap-2 rounded-full bg-accent py-0 pl-1 pr-3 md:py-[0.1rem]',
+                  {
+                    'pl-3': !skill.image
+                  }
+                )}
               >
                 {#if skill.image}
-                  <Avatar class="w-7 h-7">
+                  <Avatar class="h-6 w-6 md:h-7 md:w-7">
                     <AvatarImage
                       src={urlForImage(skill.image).width(200).height(200).url()}
                       alt={skill.name}
@@ -127,7 +135,7 @@
                     </AvatarFallback>
                   </Avatar>
                 {/if}
-                <p class="h-8 flex items-center">{skill.name}</p>
+                <p class="flex h-8 items-center text-sm md:text-base">{skill.name}</p>
               </li>
             {/each}
           </ul>

@@ -8,7 +8,7 @@
   import { previewSubscription } from '$lib/config/sanity';
   import { Card, CardContent, CardHeader, CardTitle } from '$components/ui/card';
   import { Separator } from '$components/ui/separator';
-  import { UnorderedList, ListItem } from '$components/portable-text';
+  import { UnorderedList, ListItem, Paragraph } from '$components/portable-text';
 
   import type { PageData } from './$types';
 
@@ -39,14 +39,18 @@
 
 <div in:fly={{ delay: 150, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">About</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
+    <CardContent class="p-4 !pt-0 md:p-6">
       <PortableText
         value={user.bio}
         components={{
+          block: {
+            // @ts-ignore
+            normal: Paragraph
+          },
           list: {
             // @ts-ignore
             bullet: UnorderedList
@@ -63,21 +67,23 @@
 
 <div in:fly={{ delay: 200, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">Connect</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <ul class="space-y-4">
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <ul
+        class="grid grid-cols-4 items-center justify-center justify-items-center sm:block sm:space-y-4"
+      >
         <li>
           <a
             href={'mailto:' + user?.email}
             class="flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:underline"
           >
             <MailIcon
-              class="w-8 h-8 md:w-6 md:h-6 shrink-0 transition-colors fill-foreground stroke-background dark:stroke-background dark:fill-foreground"
+              class="h-8 w-8 shrink-0 fill-foreground stroke-background transition-colors dark:fill-foreground dark:stroke-background md:h-6 md:w-6"
             />
-            <p class="hidden md:block">{user?.email}</p>
+            <p class="hidden sm:block">{user?.email}</p>
           </a>
         </li>
         <li>
@@ -86,9 +92,9 @@
             class="flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:underline"
           >
             <PhoneIcon
-              class="w-8 h-8 md:w-6 md:h-6 shrink-0 fill-foreground dark:stroke-none dark:fill-foreground"
+              class="h-8 w-8 shrink-0 fill-foreground dark:fill-foreground dark:stroke-none md:h-6 md:w-6"
             />
-            <p class="hidden md:block">{user?.phone}</p>
+            <p class="hidden sm:block">{user?.phone}</p>
           </a>
         </li>
         {#if user?.links?.github}
@@ -98,13 +104,13 @@
               class="flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:underline"
             >
               <div
-                class="relative rounded-full w-8 h-8 md:w-6 md:h-6 overflow-hidden bg-foreground dark:bg-white"
+                class="relative h-8 w-8 overflow-hidden rounded-full bg-foreground dark:bg-white md:h-6 md:w-6"
               >
                 <GithubIcon
-                  class="absolute -bottom-[2.7px] md:-bottom-[2px] left-1/2 -translate-x-1/2 w-7 h-7 md:w-5 md:h-5 stroke-background fill-background dark:stroke-background dark:fill-background"
+                  class="absolute -bottom-[2.7px] left-1/2 h-7 w-7 -translate-x-1/2 fill-background stroke-background dark:fill-background dark:stroke-background md:-bottom-[2px] md:h-5 md:w-5"
                 />
               </div>
-              <p class="hidden md:block">
+              <p class="hidden sm:block">
                 {user?.links?.github.replace(/https:\/\/(www\.)?/i, '')}
               </p>
             </a>
@@ -117,9 +123,9 @@
               class="flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:underline"
             >
               <LinkedinIcon
-                class="w-8 h-8 md:w-6 md:h-6 shrink-0 stroke-foreground fill-foreground dark:stroke-foreground dark:fill-foreground"
+                class="h-8 w-8 shrink-0 fill-foreground stroke-foreground dark:fill-foreground dark:stroke-foreground md:h-6 md:w-6"
               />
-              <p class="hidden md:block">
+              <p class="hidden sm:block">
                 {user?.links?.linkedin.replace(/https:\/\/(www\.)?/i, '')}
               </p>
             </a>
@@ -132,17 +138,17 @@
 
 <div in:fly={{ delay: 250, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">Languages</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
+    <CardContent class="p-4 !pt-0 md:p-6">
       <ul class="space-y-4">
         {#each user?.languages ?? [] as { language, native }}
           <li class="font-medium md:font-normal">
             {language}
             {#if native}
-              <p class="inline ml-1 text-foreground/75">(Native)</p>
+              <p class="ml-1 inline text-foreground/75">(Native)</p>
             {/if}
           </li>
         {/each}

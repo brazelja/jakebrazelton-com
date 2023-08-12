@@ -13,7 +13,7 @@
 
   export let data: PageData;
 
-  $: ({ topArtists, repositories, videoGames, comics, horrorMovies } = data);
+  $: ({ topArtists, repositories, books, videoGames, comics, horrorMovies } = data);
 </script>
 
 <header class="mb-6">
@@ -26,21 +26,23 @@
       <CardTitle class="text-2xl">Music</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <div class="grid grid-cols-5 justify-items-center gap-2">
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
         {#each topArtists as artist (artist.id)}
           <a
             href={artist.external_urls.spotify}
-            class="w-fit p-4 rounded transition-colors bg-muted/50 hover:bg-muted hover:cursor-pointer"
+            class="w-full max-w-[11.5rem] rounded bg-muted/50 p-4 transition-colors hover:cursor-pointer hover:bg-muted"
           >
-            <Avatar class="w-36 h-36 mb-4">
+            <Avatar class="mx-auto mb-4 h-28 w-28 md:h-36 md:w-36">
               <AvatarImage src={artist.images[0].url} alt={artist.name} />
               <AvatarFallback>
                 <img src={artist.images.at(-1)?.url ?? ''} alt={artist.name} />
               </AvatarFallback>
             </Avatar>
-            <p class="font-semibold text-start mb-1">{artist.name}</p>
-            <p class="text-sm text-foreground/50 font-semibold text-start">Artist</p>
+            <div class="min-h-[4rem]">
+              <p class="pb-1 text-start text-sm font-semibold md:text-base">{artist.name}</p>
+              <p class="text-start text-xs font-semibold text-foreground/50">Artist</p>
+            </div>
           </a>
         {/each}
       </div>
@@ -50,20 +52,22 @@
 
 <div in:fly={{ delay: 200, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">Starred Repositories</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <div class="grid grid-cols-2 gap-4">
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         {#each repositories as repo (repo.id)}
           <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="contents">
             <Card class="flex flex-col transition-colors hover:bg-muted/50">
               <CardHeader class="p-3">
                 <CardTitle class="flex items-center gap-2">
-                  <BookMarkedIcon class="w-6 h-6" />
+                  <BookMarkedIcon class="h-6 w-6" />
                   {repo.full_name}
-                  <span class="text-sm leading-snug text-foreground/50 border rounded-full px-2">
+                  <span
+                    class="rounded-full border px-2 text-xs leading-snug text-foreground/50 sm:text-sm"
+                  >
                     Public
                   </span>
                 </CardTitle>
@@ -74,7 +78,7 @@
               <CardFooter class="mt-auto p-3 pt-0 text-foreground/50">
                 <span class="inline-flex items-center gap-1">
                   <span
-                    class={clsx('rounded-full border w-3 h-3', {
+                    class={clsx('h-3 w-3 rounded-full border', {
                       'bg-[#3178c6]': repo.language === 'TypeScript',
                       'bg-[#f1e05a]': repo.language === 'JavaScript',
                       'bg-[#e34c26]': repo.language === 'HTML',
@@ -85,11 +89,11 @@
                   {repo.language}
                 </span>
                 <span class="ml-4 inline-flex items-center gap-1">
-                  <StarIcon class="w-5 h-5" />
+                  <StarIcon class="h-5 w-5" />
                   {formatNumber(repo.stargazers_count, 1)}
                 </span>
                 <span class="ml-4 inline-flex items-center gap-1">
-                  <GitForkIcon class="w-5 h-5" />
+                  <GitForkIcon class="h-5 w-5" />
                   {formatNumber(repo.forks_count, 1)}
                 </span>
               </CardFooter>
@@ -103,16 +107,16 @@
 
 <div in:fly={{ delay: 250, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
-      <CardTitle class="text-2xl">Video Games</CardTitle>
+    <CardHeader class="flex p-4 md:p-6">
+      <CardTitle class="text-2xl">Books</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <div class="grid grid-cols-5 justify-items-center gap-2">
-        {#each videoGames as game (game.name)}
-          <a href={game.url} class="rounded overflow-hidden hover:cursor-pointer" title={game.name}>
-            <Avatar class="w-44 h-auto aspect-[6.6/10] as rounded-none">
-              <AvatarImage src={game.image} alt={game.name} />
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
+        {#each books as book (book.name)}
+          <a href={book.url} class="overflow-hidden rounded" title={book.name}>
+            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
+              <AvatarImage src={book.image} alt={book.name} />
             </Avatar>
           </a>
         {/each}
@@ -123,20 +127,16 @@
 
 <div in:fly={{ delay: 300, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
-      <CardTitle class="text-2xl">Comics</CardTitle>
+    <CardHeader class="flex p-4 md:p-6">
+      <CardTitle class="text-2xl">Video Games</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <div class="grid grid-cols-5 justify-items-center gap-y-4">
-        {#each comics as comic (comic.name)}
-          <a
-            href={comic.url}
-            class="rounded overflow-hidden hover:cursor-pointer"
-            title={comic.name}
-          >
-            <Avatar class="w-44 h-auto aspect-[6.6/10] as rounded-none">
-              <AvatarImage src={comic.image} alt={comic.name} />
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
+        {#each videoGames as game (game.name)}
+          <a href={game.url} class="overflow-hidden rounded" title={game.name}>
+            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
+              <AvatarImage src={game.image} alt={game.name} />
             </Avatar>
           </a>
         {/each}
@@ -147,19 +147,35 @@
 
 <div in:fly={{ delay: 350, duration: 300, easing: quintOut, y: 200 }}>
   <Card class="mb-8 bg-muted/25">
-    <CardHeader class="flex">
+    <CardHeader class="flex p-4 md:p-6">
+      <CardTitle class="text-2xl">Comics</CardTitle>
+    </CardHeader>
+    <Separator class="mb-4" />
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
+        {#each comics as comic (comic.name)}
+          <a href={comic.url} class="overflow-hidden rounded" title={comic.name}>
+            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
+              <AvatarImage src={comic.image} alt={comic.name} />
+            </Avatar>
+          </a>
+        {/each}
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
+<div in:fly={{ delay: 400, duration: 300, easing: quintOut, y: 200 }}>
+  <Card class="mb-8 bg-muted/25">
+    <CardHeader class="flex p-4 md:p-6">
       <CardTitle class="text-2xl">Horror Movies</CardTitle>
     </CardHeader>
     <Separator class="mb-4" />
-    <CardContent>
-      <div class="grid grid-cols-5 justify-items-center gap-y-4">
+    <CardContent class="p-4 !pt-0 md:p-6">
+      <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
         {#each horrorMovies as movie (movie.name)}
-          <a
-            href={movie.url}
-            class="rounded overflow-hidden hover:cursor-pointer"
-            title={movie.name}
-          >
-            <Avatar class="w-44 h-auto aspect-[6.6/10] as rounded-none">
+          <a href={movie.url} class="overflow-hidden rounded" title={movie.name}>
+            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
               <AvatarImage src={movie.image} alt={movie.name} />
             </Avatar>
           </a>

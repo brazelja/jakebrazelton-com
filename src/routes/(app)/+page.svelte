@@ -18,63 +18,65 @@
 </svelte:head>
 
 <section>
-  <div class="container relative min-h-[calc(100dvh_-_8.5rem_-_1px)]">
+  <div
+    class="relative mx-auto min-h-[calc(100dvh_-_8.5rem_-_1px)] w-full max-w-[1400px] px-6 md:px-8"
+  >
     <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center"
+      class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center"
     >
       <div class="relative">
-        <Avatar class="relative w-52 h-52 shadow z-10">
+        <Avatar class="relative z-10 h-52 w-52 shadow">
           <AvatarImage src={imageUrl} alt="Jake Brazelton" />
           <AvatarFallback>
             <img src={blurUrl} alt="Jake Brazelton" />
           </AvatarFallback>
         </Avatar>
         <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-[13rem] bg-gradient-to-br from-purple-600 to-yellow-600 w-72 h-72 rounded-full filter blur-3xl z-0 origin-[0_0] motion-safe:animate-revolve"
+          class="absolute left-1/2 top-1/2 z-0 h-72 w-72 origin-[0_0] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-purple-600 to-yellow-600 leading-[13rem] blur-3xl filter motion-safe:animate-revolve"
         />
         <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-[13rem] bg-gradient-to-l from-purple-600 to-yellow-600 dark:from-purple-600/50 dark:to-yellow-600/50 w-72 h-72 rounded-full filter blur-[96px] z-0 origin-[0_0] motion-safe:-animate-revolve"
+          class="absolute left-1/2 top-1/2 z-0 h-72 w-72 origin-[0_0] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-l from-purple-600 to-yellow-600 leading-[13rem] blur-[96px] filter motion-safe:-animate-revolve dark:from-purple-600/50 dark:to-yellow-600/50"
         />
       </div>
-      <h1 class="mt-4 text-4xl font-bold text-center z-10">{user?.name}</h1>
-      <h2 class="mt-2 text-lg sm:text-2xl whitespace-nowrap font-medium text-center z-10">
+      <h1 class="z-10 mt-4 text-center text-4xl font-bold">{user?.name}</h1>
+      <h2 class="z-10 mt-2 whitespace-nowrap text-center text-lg font-medium sm:text-2xl">
         {user?.title}
       </h2>
-      <div class="flex gap-6 md:gap-4 mt-4 z-10">
+      <div class="z-10 mt-4 flex gap-6 md:gap-4">
         {#if user?.links?.github}
           <a
             href={user?.links?.github}
-            class="group relative rounded-full w-8 h-8 overflow-hidden transition-colors bg-foreground hover:cursor-pointer hover:!bg-purple-400 dark:bg-foreground"
+            class="group relative h-8 w-8 overflow-hidden rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
           >
             <GithubIcon
-              class="absolute -bottom-[2.2px] left-1/2 -translate-x-1/2 w-7 h-7 stroke-background fill-background dark:stroke-background dark:fill-background"
+              class="absolute -bottom-[2.5px] left-1/2 h-7 w-7 -translate-x-1/2 fill-background stroke-background dark:fill-background dark:stroke-background"
             />
           </a>
         {/if}
         {#if user?.links?.linkedin}
           <a
             href={user?.links?.linkedin}
-            class="group flex items-center justify-center rounded-sm w-8 h-8 transition-colors bg-foreground hover:cursor-pointer hover:!bg-purple-400 dark:bg-foreground"
+            class="group flex h-8 w-8 items-center justify-center rounded-sm bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
           >
             <LinkedinIcon
-              class="w-7 h-7 stroke-background fill-background dark:stroke-background dark:fill-background"
+              class="h-7 w-7 fill-background stroke-background dark:fill-background dark:stroke-background"
             />
           </a>
         {/if}
         <a
           href={'mailto:' + user?.email}
-          class="group flex items-center justify-center rounded-full w-8 h-8 transition-colors bg-foreground hover:cursor-pointer hover:!bg-purple-400 dark:bg-foreground"
+          class="group flex h-8 w-8 items-center justify-center rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
         >
           <MailIcon
-            class="w-7 h-7 transition-colors fill-background group-hover:stroke-purple-400 dark:stroke-white dark:fill-background dark:group-hover:stroke-purple-400"
+            class="h-7 w-7 fill-background transition-colors group-hover:stroke-purple-400 dark:fill-background dark:stroke-white dark:group-hover:stroke-purple-400"
           />
         </a>
         <a
           href={'tel:' + user?.phone}
-          class="group flex items-center justify-center rounded-full w-8 h-8 transition-colors bg-foreground hover:cursor-pointer hover:!bg-purple-400 dark:bg-foreground"
+          class="group flex h-8 w-8 items-center justify-center rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
         >
           <PhoneIcon
-            class="w-6 h-6 fill-background transition-colors group-hover:stroke-purple-400 dark:stroke-background dark:fill-background group-hover:dark:stroke-background"
+            class="h-6 w-6 fill-background transition-colors group-hover:stroke-purple-400 dark:fill-background dark:stroke-background group-hover:dark:stroke-background"
           />
         </a>
       </div>

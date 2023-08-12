@@ -39,11 +39,11 @@
   {#if ready}
     <div in:fly={{ delay: 150 + i * 50, duration: 300, easing: quintOut, y: 200 }}>
       <Card class="mb-8 bg-muted/25">
-        <CardHeader class="flex flex-row w-full justify-between">
+        <CardHeader class="flex w-full flex-row flex-wrap justify-between p-4 md:p-6">
           <div class="space-y-2">
             <CardTitle class="text-2xl">{edu.degree}</CardTitle>
-            <CardDescription class="flex items-center gap-2 text-lg">
-              <Avatar class="w-8 h-8">
+            <CardDescription class="flex items-center gap-2 text-sm md:text-lg">
+              <Avatar class="h-8 w-8">
                 <AvatarImage
                   src={urlForImage(edu.school.logo).width(200).height(200).url()}
                   alt={edu.school.name}
@@ -60,12 +60,16 @@
               </a>
             </CardDescription>
           </div>
-          <p class="text-muted-foreground">
-            {edu.startDate.slice(0, 4)} - {edu.endDate ? edu.endDate.slice(0, 4) : 'Present'}
+          <p class="grow text-end text-muted-foreground">
+            {#if edu.startDate.slice(0, 4) === edu.endDate?.slice(0, 4)}
+              {edu.startDate.slice(0, 4)}
+            {:else}
+              {edu.startDate.slice(0, 4)} - {edu.endDate ? edu.endDate.slice(0, 4) : 'Present'}
+            {/if}
           </p>
         </CardHeader>
         <Separator class="mb-4" />
-        <CardContent>
+        <CardContent class="p-4 !pt-0 md:p-6">
           <PortableText
             value={edu.details}
             components={{
