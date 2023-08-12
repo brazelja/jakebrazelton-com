@@ -12,6 +12,8 @@ import {
   Education,
   Experience,
   Project,
+  School,
+  Skills,
   User,
   // objects
   Address,
@@ -19,7 +21,7 @@ import {
   Skill
 } from '$lib/config/sanity/schemas';
 
-const singletonTypes = new Set<string>([User.name]);
+const singletonTypes = new Set<string>([User.name, Skills.name]);
 const singletonActions = new Set(['publish', 'discardChanges', 'restore']);
 
 export default defineConfig({
@@ -35,6 +37,8 @@ export default defineConfig({
       Education,
       Experience,
       Project,
+      School,
+      Skills,
       User,
       // objects
       Address,
@@ -63,18 +67,32 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            S.listItem()
-              .title('User')
-              .id('user')
-              .child(
-                S.document()
-                  .schemaType('user')
-                  .documentId('user')
-                  .views([S.view.form(), S.view.component(ResumePreview).title('Preview')])
-              ),
-            ...S.documentTypeListItems().filter(
-              (listItem) => !singletonTypes.has(listItem.getId()!)
-            )
+            ...S.documentTypeListItems().map((listItem) => {
+              if (listItem.getId() === User.name) {
+                return S.listItem()
+                  .title('User')
+                  .id('user')
+                  .child(
+                    S.document()
+                      .schemaType('user')
+                      .documentId('user')
+                      .views([S.view.form(), S.view.component(ResumePreview).title('Preview')])
+                  );
+              }
+              if (listItem.getId() === Skills.name) {
+                return S.listItem()
+                  .title('Skills')
+                  .id('skills')
+                  .child(
+                    S.document()
+                      .schemaType('skills')
+                      .documentId('skills')
+                      .views([S.view.form(), S.view.component(ResumePreview).title('Preview')])
+                  );
+              }
+              return listItem;
+              // !singletonTypes.has(listItem.getId()!)
+            })
           ])
     }),
     visionTool()

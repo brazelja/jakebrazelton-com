@@ -14,7 +14,7 @@
   /**
    * Only show the preview banner on the following route id's.
    */
-  const previewRouteIds = ['/(app)/resume'];
+  const previewRouteIds = ['/(app)/about'];
 
   $: ({ previewMode, previewModeEmbed: embedded } = data);
   $: showPreviewBanner = previewMode && previewRouteIds.includes($page.route.id || '');
@@ -26,17 +26,15 @@
     // or based on system default theme
     // it's important to put it in the head section to avoid bad UX to theme changing
     // from dark to light or vise versa on page load
-    if (!('theme' in localStorage)) {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.setProperty('color-scheme', 'dark');
     } else {
-      let theme = localStorage.getItem('theme');
-      if (theme) {
-        document.documentElement.classList.add(theme);
-      }
+      document.documentElement.classList.remove('dark');
+      document.documentElement.style.removeProperty('color-scheme');
     }
   </script>
 </svelte:head>

@@ -1,0 +1,134 @@
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { fly } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
+  import { PortableText } from '@portabletext/svelte';
+  import groq from 'groq';
+
+  import { previewSubscription, urlForImage } from '$lib/config/sanity';
+  import { Separator } from '$components/ui/separator';
+  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
+  import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+    CardFooter
+  } from '$components/ui/card';
+
+  import type { PageData } from './$types';
+  import { cn } from '$lib/utils';
+
+  export let data: PageData;
+
+  let { initialData, previewMode, seo } = data;
+  $: ({ data: liveData } = previewSubscription(
+    groq`
+    {
+      'experiences': *[_type == "experience"] { ..., company-> } | order(startDate desc, _updatedAt desc),
+    }
+  `,
+    { initialData, enabled: !!previewMode }
+  ));
+
+  $: ({ experiences } = $liveData);
+
+  let ready = false;
+  onMount(() => (ready = true));
+</script>
+
+<svelte:head>
+  <title>{seo.title}</title>
+  <meta name="description" content={seo.description} />
+  <link rel="canonical" href={seo.url} />
+  <!-- OpenGraph -->
+  <meta property="og:title" content={seo.title} />
+  <meta property="og:description" content={seo.description} />
+  <meta property="og:image" content={seo.image} />
+  <meta property="og:url" content={seo.url} />
+  <!-- Twitter Meta Tags -->
+  <meta property="twitter:title" content={seo.title} />
+  <meta property="twitter:description" content={seo.description} />
+  <meta property="twitter:image" content={seo.image} />
+</svelte:head>
+
+<header class="mb-6">
+  <h2 class="text-3xl font-semibold">Experience</h2>
+</header>
+
+{#each experiences as experience, i}
+  {#if ready}
+    <div in:fly={{ delay: 150 + i * 50, duration: 300, easing: quintOut, y: 200 }}>
+      <Card class="mb-8 bg-muted/25">
+        <CardHeader class="flex w-full flex-row flex-wrap justify-between p-4 md:p-6">
+          <div class="space-y-2">
+            <CardTitle class="text-2xl">{experience.title}</CardTitle>
+            <CardDescription class="flex items-center gap-2 text-sm md:text-lg">
+              <Avatar class="h-8 w-8">
+                <AvatarImage
+                  src={urlForImage(experience.company.logo).width(200).height(200).url()}
+                  alt={experience.company.name}
+                />
+                <AvatarFallback>
+                  <img
+                    src={urlForImage(experience.company.logo).width(50).height(50).blur(5).url()}
+                    alt={experience.company.name}
+                  />
+                </AvatarFallback>
+              </Avatar>
+              <a href={experience.company.website} class="hover:underline"
+                >{experience.company.name} - {experience.company.address?.city}, {experience.company
+                  .address?.state}
+                {experience.remote ? '(Remote)' : ''}</a
+              >
+            </CardDescription>
+          </div>
+          <p class="grow text-end text-muted-foreground">
+            {#if experience.startDate.slice(0, 4) === experience.endDate?.slice(0, 4)}
+              {experience.startDate.slice(0, 4)}
+            {:else}
+              {experience.startDate.slice(0, 4)} - {experience.endDate
+                ? experience.endDate.slice(0, 4)
+                : 'Present'}
+            {/if}
+          </p>
+        </CardHeader>
+        <Separator class="mb-4" />
+        <CardContent class="p-4 !pt-0 md:p-6">
+          <PortableText value={experience.description} />
+        </CardContent>
+        <CardFooter>
+          <ul class="mt-4 flex flex-wrap gap-4 md:mt-2 md:gap-2">
+            {#each experience?.skills ?? [] as skill}
+              <li
+                class={cn(
+                  'flex items-center gap-2 rounded-full bg-accent py-0 pl-1 pr-3 md:py-[0.1rem]',
+                  {
+                    'pl-3': !skill.image
+                  }
+                )}
+              >
+                {#if skill.image}
+                  <Avatar class="h-6 w-6 md:h-7 md:w-7">
+                    <AvatarImage
+                      src={urlForImage(skill.image).width(200).height(200).url()}
+                      alt={skill.name}
+                    />
+                    <AvatarFallback>
+                      <img
+                        src={urlForImage(skill.image).width(50).height(50).blur(5).url()}
+                        alt={skill.name}
+                      />
+                    </AvatarFallback>
+                  </Avatar>
+                {/if}
+                <p class="flex h-8 items-center text-sm md:text-base">{skill.name}</p>
+              </li>
+            {/each}
+          </ul>
+        </CardFooter>
+      </Card>
+    </div>
+  {/if}
+{/each}

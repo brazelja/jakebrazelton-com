@@ -1,4 +1,10 @@
-import { defineType, type SanityDocument, type PortableTextBlock, type Reference } from 'sanity';
+import {
+  defineType,
+  type SanityDocument,
+  type PortableTextBlock,
+  type Reference,
+  type Image
+} from 'sanity';
 import { CodeIcon } from 'lucide-react';
 
 import type { Company } from './company';
@@ -29,6 +35,27 @@ export const Project = defineType({
       of: [{ type: 'block' }]
     },
     {
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt',
+              type: 'string',
+              validation: (rule) => rule.required()
+            }
+          ]
+        }
+      ]
+    },
+    {
       name: 'link',
       title: 'Link',
       type: 'url'
@@ -57,6 +84,7 @@ export type Project = SanityDocument & {
   name: string;
   company: Reference & { _def: Company };
   description: PortableTextBlock[];
+  images: (Image & { alt: string })[];
   link?: string;
   skills: Skill[];
 };

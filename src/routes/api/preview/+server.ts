@@ -25,7 +25,7 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
 
     // Set the redirect path and append the isPreview query
     // param, so that the app knows it's a Sanity preview.
-    redirectPath = `/resume?isPreview=true`;
+    redirectPath = `/about?isPreview=true`;
   }
 
   // Set the preview cookie.

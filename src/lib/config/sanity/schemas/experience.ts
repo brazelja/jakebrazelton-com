@@ -43,6 +43,16 @@ export const Experience = defineType({
       of: [{ type: 'block' }]
     },
     {
+      name: 'remote',
+      title: 'Remote',
+      description: 'Is this a remote job?',
+      type: 'boolean',
+      initialValue: false,
+      options: {
+        layout: 'checkbox'
+      }
+    },
+    {
       name: 'skills',
       title: 'Skills',
       type: 'array',
@@ -68,5 +78,6 @@ export type Experience = SanityDocument & {
   startDate: `${number}-${number}-${number}`;
   endDate?: `${number}-${number}-${number}`;
   description?: PortableTextBlock[];
+  remote: boolean;
   skills: Skill[];
 };
