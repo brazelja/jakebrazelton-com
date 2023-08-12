@@ -10,7 +10,6 @@
   import type { LayoutData } from './$types';
   import { Avatar, AvatarFallback, AvatarImage } from '$components/ui/avatar';
   import { page } from '$app/stores';
-  import clsx from 'clsx';
   import { cn } from '$lib/utils';
 
   export let data: LayoutData;
@@ -65,12 +64,7 @@
   $: {
     value.set($page.route.id);
   }
-  $: subtitle = items.find(({ id }) => $page.route.id === id)?.label;
 </script>
-
-<svelte:head>
-  <title>{$liveData?.user?.name} | About | {subtitle}</title>
-</svelte:head>
 
 <div class="mx-auto w-full max-w-[1400px] px-6 md:px-8">
   <header class="flex w-full flex-col items-center justify-start py-8 md:flex-row">
@@ -134,7 +128,7 @@
       <ul class="sticky top-24 hidden auto-rows-auto text-muted-foreground md:grid">
         {#each items as { id, label }}
           <li
-            class={clsx(
+            class={cn(
               'rounded transition-colors hover:cursor-pointer hover:bg-muted hover:text-foreground',
               { 'text-foreground': $page.route.id === id }
             )}

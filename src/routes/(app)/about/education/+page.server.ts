@@ -1,4 +1,6 @@
 import groq from 'groq';
+import { dev } from '$app/environment';
+import { VERCEL_URL } from '$env/static/private';
 
 import { getSanityServerClient, overlayDrafts } from '$lib/config/sanity/client';
 import type { Education } from '$lib/config/sanity/schemas';
@@ -21,6 +23,13 @@ export const load = (async ({ parent }) => {
     previewMode,
     initialData: {
       education: overlayDrafts(education)
+    },
+    seo: {
+      title: 'Education | Jake Brazelton',
+      description:
+        'Education that Jake Brazelton has acquired, including degrees, certifications, and courses.',
+      image: `${dev ? 'http' : 'https'}://${VERCEL_URL}/android-chrome-512x512.png`,
+      url: `${dev ? 'http' : 'https'}://${VERCEL_URL}/about/education`
     }
   };
 }) satisfies PageServerLoad;

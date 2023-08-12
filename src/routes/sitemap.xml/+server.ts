@@ -1,12 +1,15 @@
+import { dev } from '$app/environment';
+import { VERCEL_URL } from '$env/static/private';
+
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
 export const GET: RequestHandler = () => {
   const pages = [
-    'about/general',
-    'about/interests',
-    'about/skills',
+    '/about/general',
+    '/about/interests',
+    '/about/skills',
     '/about/experience',
     '/about/education',
     '/about/projects'
@@ -30,7 +33,7 @@ const sitemap = (pages: string[]) => `<?xml version="1.0" encoding="UTF-8" ?>
   xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 >
   <url>
-    <loc>https://jakebrazelton.com</loc>
+    <loc>${dev ? 'http' : 'https'}://${VERCEL_URL}</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -38,7 +41,7 @@ const sitemap = (pages: string[]) => `<?xml version="1.0" encoding="UTF-8" ?>
     .map(
       (page) => `
       <url>
-        <loc>https://jakebrazelton.com/${page}</loc>
+        <loc>${dev ? 'http' : 'https'}://${VERCEL_URL}${page}</loc>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
       </url>

@@ -8,13 +8,24 @@
 
   export let data: PageData;
 
-  const user = data.user;
+  let { user, seo } = data;
   const imageUrl = urlForImage(user?.picture).width(408).height(408).url();
   const blurUrl = urlForImage(user?.picture).width(408).height(408).blur(100).url();
 </script>
 
 <svelte:head>
-  <title>Jake Brazelton - Software Developer</title>
+  <title>{seo.title}</title>
+  <meta name="description" content={seo.description} />
+  <link rel="canonical" href={seo.url} />
+  <!-- OpenGraph -->
+  <meta property="og:title" content={seo.title} />
+  <meta property="og:description" content={seo.description} />
+  <meta property="og:image" content={seo.image} />
+  <meta property="og:url" content={seo.url} />
+  <!-- Twitter Meta Tags -->
+  <meta property="twitter:title" content={seo.title} />
+  <meta property="twitter:description" content={seo.description} />
+  <meta property="twitter:image" content={seo.image} />
 </svelte:head>
 
 <section>
