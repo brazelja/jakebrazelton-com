@@ -3,7 +3,9 @@
   import { quintOut } from 'svelte/easing';
   import { BookMarkedIcon, GitForkIcon, StarIcon } from 'lucide-svelte';
   import clsx from 'clsx';
+  import groq from 'groq';
 
+  import { previewSubscription, urlForImage } from '$lib/config/sanity';
   import { formatNumber } from '$lib/utils/format-number';
   import { Separator } from '$components/ui/separator';
   import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$components/ui/card';
@@ -13,7 +15,14 @@
 
   export let data: PageData;
 
-  let { topArtists, repositories, books, videoGames, comics, horrorMovies, seo } = data;
+  let { initialData, previewMode, topArtists, repositories, seo } = data;
+  $: ({ data: liveData } = previewSubscription(
+    groq`*[_type == "interests"] | order(_updatedAt desc)[0]`,
+    { initialData, enabled: !!previewMode }
+  ));
+
+  $: ({ interests } = $liveData);
+  $: ({ books, videoGames, comics, horrorMovies } = interests);
 </script>
 
 <svelte:head>
@@ -128,10 +137,19 @@
     <Separator class="mb-4" />
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
-        {#each books as book (book.name)}
-          <a href={book.url} class="overflow-hidden rounded" title={book.name}>
-            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
-              <AvatarImage src={book.image} alt={book.name} />
+        {#each books ?? [] as book (book.name)}
+          <a href={book.link} class="overflow-hidden" title={book.name}>
+            <Avatar class="aspect-[6.6/10] h-auto w-36 rounded sm:w-44">
+              <AvatarImage
+                src={urlForImage(book.image).width(352).height(540).url()}
+                alt={book.name}
+              />
+              <AvatarFallback>
+                <img
+                  src={urlForImage(book.image).width(176).height(270).blur(100).url()}
+                  alt={book.name}
+                />
+              </AvatarFallback>
             </Avatar>
           </a>
         {/each}
@@ -149,9 +167,18 @@
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
         {#each videoGames as game (game.name)}
-          <a href={game.url} class="overflow-hidden rounded" title={game.name}>
-            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
-              <AvatarImage src={game.image} alt={game.name} />
+          <a href={game.link} class="overflow-hidden" title={game.name}>
+            <Avatar class="aspect-[6.6/10] h-auto w-36 rounded sm:w-44">
+              <AvatarImage
+                src={urlForImage(game.image).width(400).height(500).url()}
+                alt={game.name}
+              />
+              <AvatarFallback>
+                <img
+                  src={urlForImage(game.image).width(176).height(270).blur(100).url()}
+                  alt={game.name}
+                />
+              </AvatarFallback>
             </Avatar>
           </a>
         {/each}
@@ -169,9 +196,18 @@
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
         {#each comics as comic (comic.name)}
-          <a href={comic.url} class="overflow-hidden rounded" title={comic.name}>
-            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
-              <AvatarImage src={comic.image} alt={comic.name} />
+          <a href={comic.link} class="overflow-hidden" title={comic.name}>
+            <Avatar class="aspect-[6.6/10] h-auto w-36 rounded sm:w-44">
+              <AvatarImage
+                src={urlForImage(comic.image).width(352).height(540).url()}
+                alt={comic.name}
+              />
+              <AvatarFallback>
+                <img
+                  src={urlForImage(comic.image).width(176).height(270).blur(100).url()}
+                  alt={comic.name}
+                />
+              </AvatarFallback>
             </Avatar>
           </a>
         {/each}
@@ -189,9 +225,18 @@
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
         {#each horrorMovies as movie (movie.name)}
-          <a href={movie.url} class="overflow-hidden rounded" title={movie.name}>
-            <Avatar class="as aspect-[6.6/10] h-auto w-36 rounded-none sm:w-44">
-              <AvatarImage src={movie.image} alt={movie.name} />
+          <a href={movie.link} class="overflow-hidden" title={movie.name}>
+            <Avatar class="aspect-[6.6/10] h-auto w-36 rounded sm:w-44">
+              <AvatarImage
+                src={urlForImage(movie.image).width(352).height(540).url()}
+                alt={movie.name}
+              />
+              <AvatarFallback>
+                <img
+                  src={urlForImage(movie.image).width(176).height(270).blur(100).url()}
+                  alt={movie.name}
+                />
+              </AvatarFallback>
             </Avatar>
           </a>
         {/each}

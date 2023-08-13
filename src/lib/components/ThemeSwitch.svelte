@@ -33,6 +33,7 @@
   type="button"
   variant="secondary"
   class={clsx('inline-flex items-center justify-center rounded-full bg-transparent p-2', className)}
+  aria-label="Toggle theme"
 >
   <span>
     {#if currentTheme === 'dark'}

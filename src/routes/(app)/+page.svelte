@@ -58,6 +58,7 @@
           <a
             href={user?.links?.github}
             class="group relative h-8 w-8 overflow-hidden rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
+            aria-label="Github"
           >
             <GithubIcon
               class="absolute -bottom-[2.5px] left-1/2 h-7 w-7 -translate-x-1/2 fill-background stroke-background dark:fill-background dark:stroke-background"
@@ -68,6 +69,7 @@
           <a
             href={user?.links?.linkedin}
             class="group flex h-8 w-8 items-center justify-center rounded-sm bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
+            aria-label="LinkedIn"
           >
             <LinkedinIcon
               class="h-7 w-7 fill-background stroke-background dark:fill-background dark:stroke-background"
@@ -77,6 +79,7 @@
         <a
           href={'mailto:' + user?.email}
           class="group flex h-8 w-8 items-center justify-center rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
+          aria-label="Email"
         >
           <MailIcon
             class="h-7 w-7 fill-background transition-colors group-hover:stroke-purple-400 dark:fill-background dark:stroke-white dark:group-hover:stroke-purple-400"
@@ -85,6 +88,7 @@
         <a
           href={'tel:' + user?.phone}
           class="group flex h-8 w-8 items-center justify-center rounded-full bg-foreground transition-colors hover:!bg-purple-400 dark:bg-foreground"
+          aria-label="Phone"
         >
           <PhoneIcon
             class="h-6 w-6 fill-background transition-colors group-hover:stroke-purple-400 dark:fill-background dark:stroke-background group-hover:dark:stroke-background"

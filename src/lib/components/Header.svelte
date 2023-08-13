@@ -33,7 +33,8 @@
               <a
                 href="/"
                 class="bg-gradient-to-br from-purple-600 via-purple-400 to-yellow-600 bg-clip-text text-2xl font-bold text-transparent"
-                >Jake Brazelton
+              >
+                Jake Brazelton
               </a>
             </SheetClose>
           </SheetTitle>
