@@ -77,8 +77,8 @@
                   />
                 </AvatarFallback>
               </Avatar>
-              <a href={experience.company.website} class="hover:underline"
-                >{experience.company.name} - {experience.company.address?.city}, {experience.company
+              <a href={experience.company.website} class="hover:underline">
+                {experience.company.name} - {experience.company.address?.city}, {experience.company
                   .address?.state}
                 {experience.remote ? '(Remote)' : ''}</a
               >

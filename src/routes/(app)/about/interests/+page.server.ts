@@ -1,27 +1,29 @@
+import groq from 'groq';
 import { dev } from '$app/environment';
 import { VERCEL_URL } from '$env/static/private';
 
+import { getSanityServerClient } from '$lib/config/sanity/client';
+import type { Interests } from '$lib/config/sanity/schemas';
 import { spotifyClient } from '$lib/server/spotify/client';
 import { githubClient } from '$lib/server/github/client';
 
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ fetch }) => {
+export const load = (async ({ parent }) => {
+  const { previewMode } = await parent();
+
+  const interests = await getSanityServerClient(previewMode).fetch<Interests>(
+    groq`*[_type == "interests"] | order(_updatedAt desc)[0]`
+  );
+
   return {
+    previewMode,
+    initialData: {
+      interests: interests
+    },
     topArtists: spotifyClient.getArtists(),
     repositories: githubClient.getStarredRepos(),
-    videoGames: fetch('/api/video-games').then<{ name: string; image: string; url: string }[]>(
-      (res) => res.json()
-    ),
-    books: fetch('/api/books').then<{ name: string; author: string; image: string; url: string }[]>(
-      (res) => res.json()
-    ),
-    comics: fetch('/api/comics').then<{ name: string; image: string; url: string }[]>((res) =>
-      res.json()
-    ),
-    horrorMovies: fetch('/api/horror').then<{ name: string; image: string; url: string }[]>((res) =>
-      res.json()
-    ),
+
     seo: {
       title: 'Interests | Jake Brazelton',
       description:

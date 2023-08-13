@@ -87,15 +87,15 @@
   <section class="grid grid-cols-1 md:grid-cols-[240px_auto] md:gap-4">
     <aside class="relative mb-4">
       <button
-        class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
+        class="flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
         use:melt={$trigger}
         aria-label="Food"
       >
         <span class="flex items-center gap-2">
-          <MenuIcon class="h-5 w-5" />
+          <MenuIcon class="h-6 w-6" />
           {$valueLabel ?? ''}
         </span>
-        <ChevronDownIcon class="h-5 w-5" />
+        <ChevronDownIcon class="h-6 w-6" />
       </button>
       {#if $open}
         <div
@@ -112,12 +112,12 @@
           {#each items as { id, label }}
             <a
               href="/about/{label.toLowerCase()}"
-              class="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+              class="relative flex w-full cursor-default select-none items-center rounded-sm py-3 pl-9 pr-2 outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
               use:melt={$option({ value: id, label: label })}
             >
-              <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+              <span class="absolute left-2 flex h-5 w-5 items-center justify-center">
                 {#if $isSelected(id)}
-                  <CheckIcon class="h-4 w-4" />
+                  <CheckIcon class="h-5 w-5" />
                 {/if}
               </span>
               {label}
