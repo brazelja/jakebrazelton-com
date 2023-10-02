@@ -1,16 +1,22 @@
 <script lang="ts">
   import groq from 'groq';
-  import { createSelect, melt } from '@melt-ui/svelte';
-  import { CheckIcon, ChevronDownIcon, MenuIcon } from 'lucide-svelte';
-  import { fly } from 'svelte/transition';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
   import { Separator } from '$components/ui/separator';
+  import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+  } from '$components/ui/select';
 
   import type { LayoutData } from './$types';
   import { Avatar, AvatarFallback, AvatarImage } from '$components/ui/avatar';
   import { page } from '$app/stores';
   import { cn } from '$lib/utils';
+  import type { ComponentProps } from 'svelte';
 
   export let data: LayoutData;
 
@@ -30,40 +36,42 @@
 
   const items = [
     {
-      id: '/(app)/about/general',
+      value: '/(app)/about/general',
       label: 'General'
     },
     {
-      id: '/(app)/about/interests',
+      value: '/(app)/about/interests',
       label: 'Interests'
     },
     {
-      id: '/(app)/about/skills',
+      value: '/(app)/about/skills',
       label: 'Skills'
     },
     {
-      id: '/(app)/about/experience',
+      value: '/(app)/about/experience',
       label: 'Experience'
     },
     {
-      id: '/(app)/about/education',
+      value: '/(app)/about/education',
       label: 'Education'
     },
     {
-      id: '/(app)/about/projects',
+      value: '/(app)/about/projects',
       label: 'Projects'
     }
   ];
 
-  const {
-    elements: { trigger, menu, option },
-    states: { valueLabel, open, value },
-    helpers: { isSelected }
-  } = createSelect({ forceVisible: true });
+  let selected: ComponentProps<Select>['selected'];
 
   $: {
-    value.set($page.route.id);
+    if ($page.route.id) {
+      const item = items.find((item) => item.value === $page.route.id);
+      if (item) selected = item;
+    }
   }
+
+  const isSelectOption = (value: unknown): value is ComponentProps<Select>['selected'] =>
+    typeof value === 'object' && value !== null && 'value' in value && 'label' in value;
 </script>
 
 <div class="mx-auto w-full max-w-[1400px] px-6 md:px-8">
@@ -86,51 +94,35 @@
 >
   <section class="grid grid-cols-1 md:grid-cols-[240px_auto] md:gap-4">
     <aside class="relative mb-4">
-      <button
-        class="flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
-        use:melt={$trigger}
-        aria-label="Food"
+      <!-- Mobile -->
+      <Select
+        {selected}
+        onSelectedChange={(v) => {
+          if (isSelectOption(v)) selected = v;
+        }}
       >
-        <span class="flex items-center gap-2">
-          <MenuIcon class="h-6 w-6" />
-          {$valueLabel ?? ''}
-        </span>
-        <ChevronDownIcon class="h-6 w-6" />
-      </button>
-      {#if $open}
-        <div
-          class={cn(
-            'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md slide-in-from-top-2',
-            {
-              'animate-in fade-in-0 zoom-in-95': open,
-              'animate-out fade-out-0 zoom-out-95': !open
-            }
-          )}
-          use:melt={$menu}
-          transition:fly={{ duration: 150, y: -5 }}
-        >
-          {#each items as { id, label }}
-            <a
-              href="/about/{label.toLowerCase()}"
-              class="relative flex w-full cursor-default select-none items-center rounded-sm py-3 pl-9 pr-2 outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-              use:melt={$option({ value: id, label: label })}
-            >
-              <span class="absolute left-2 flex h-5 w-5 items-center justify-center">
-                {#if $isSelected(id)}
-                  <CheckIcon class="h-5 w-5" />
-                {/if}
-              </span>
-              {label}
-            </a>
-          {/each}
-        </div>
-      {/if}
+        <SelectTrigger class="w-full md:hidden">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {#each items as { value, label }}
+              <a href="/about/{label.toLowerCase()}">
+                <SelectItem {value} {label} class="py-3">
+                  {label}
+                </SelectItem>
+              </a>
+            {/each}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <!-- Desktop -->
       <ul class="sticky top-24 hidden auto-rows-auto text-muted-foreground md:grid">
-        {#each items as { id, label }}
+        {#each items as { value, label }}
           <li
             class={cn(
               'rounded transition-colors hover:cursor-pointer hover:bg-muted hover:text-foreground',
-              { 'text-foreground': $page.route.id === id }
+              { 'text-foreground': $page.route.id === value }
             )}
           >
             <a href="/about/{label.toLowerCase()}" class="inline-block w-full px-3 py-2">{label}</a>

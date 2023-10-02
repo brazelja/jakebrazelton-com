@@ -1,102 +1,106 @@
-import { cva } from 'class-variance-authority';
-import { Dialog as SheetPrimitive } from 'radix-svelte';
+import { Dialog as SheetPrimitive } from 'bits-ui';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-export { default as SheetContent } from './SheetContent.svelte';
-export { default as SheetDescription } from './SheetDescription.svelte';
-export { default as SheetFooter } from './SheetFooter.svelte';
-export { default as SheetHeader } from './SheetHeader.svelte';
-export { default as SheetOverlay } from './SheetOverlay.svelte';
-export { default as SheetPortal } from './SheetPortal.svelte';
-export { default as SheetTitle } from './SheetTitle.svelte';
+import Portal from './sheet-portal.svelte';
+import Overlay from './sheet-overlay.svelte';
+import Content from './sheet-content.svelte';
+import Header from './sheet-header.svelte';
+import Footer from './sheet-footer.svelte';
+import Title from './sheet-title.svelte';
+import Description from './sheet-description.svelte';
 
-export const Sheet = SheetPrimitive.Root;
-export const SheetTrigger = SheetPrimitive.Trigger;
-export const SheetClose = SheetPrimitive.Close;
+const Root = SheetPrimitive.Root;
+const Close = SheetPrimitive.Close;
+const Trigger = SheetPrimitive.Trigger;
 
-export const sheetVariants = cva(
-  'fixed z-50 scale-100 gap-4 bg-background p-6 opacity-100 shadow-lg border',
-  {
-    variants: {
-      position: {
-        top: 'animate-in slide-in-from-top w-full duration-300',
-        bottom: 'animate-in slide-in-from-bottom w-full duration-300',
-        left: 'animate-in slide-in-from-left h-full duration-300',
-        right: 'animate-in slide-in-from-right h-full duration-300'
-      },
-      size: {
-        content: '',
-        default: '',
-        sm: '',
-        lg: '',
-        xl: '',
-        full: ''
-      }
+export {
+  Root,
+  Close,
+  Trigger,
+  Portal,
+  Overlay,
+  Content,
+  Header,
+  Footer,
+  Title,
+  Description,
+  //
+  Root as Sheet,
+  Close as SheetClose,
+  Trigger as SheetTrigger,
+  Portal as SheetPortal,
+  Overlay as SheetOverlay,
+  Content as SheetContent,
+  Header as SheetHeader,
+  Footer as SheetFooter,
+  Title as SheetTitle,
+  Description as SheetDescription
+};
+
+export const sheetVariants = tv({
+  base: 'fixed z-50 gap-4 bg-background p-6 shadow-lg',
+  variants: {
+    side: {
+      top: 'inset-x-0 top-0 border-b',
+      bottom: 'inset-x-0 bottom-0 border-t',
+      left: 'inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm',
+      right: 'inset-y-0 right-0 h-full w-3/4  border-l sm:max-w-sm'
+    }
+  },
+  defaultVariants: {
+    side: 'right'
+  }
+});
+
+export const sheetTransitions = {
+  top: {
+    in: {
+      y: '-100%',
+      duration: 500,
+      opacity: 1
     },
-    compoundVariants: [
-      {
-        position: ['top', 'bottom'],
-        size: 'content',
-        class: 'max-h-screen'
-      },
-      {
-        position: ['top', 'bottom'],
-        size: 'default',
-        class: 'h-1/3'
-      },
-      {
-        position: ['top', 'bottom'],
-        size: 'sm',
-        class: 'h-1/4'
-      },
-      {
-        position: ['top', 'bottom'],
-        size: 'lg',
-        class: 'h-1/2'
-      },
-      {
-        position: ['top', 'bottom'],
-        size: 'xl',
-        class: 'h-5/6'
-      },
-      {
-        position: ['top', 'bottom'],
-        size: 'full',
-        class: 'h-screen'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'content',
-        class: 'max-w-screen'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'default',
-        class: 'w-1/3'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'sm',
-        class: 'w-1/4'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'lg',
-        class: 'w-1/2'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'xl',
-        class: 'w-5/6'
-      },
-      {
-        position: ['right', 'left'],
-        size: 'full',
-        class: 'w-screen'
-      }
-    ],
-    defaultVariants: {
-      position: 'right',
-      size: 'default'
+    out: {
+      y: '-100%',
+      duration: 300,
+      opacity: 1
+    }
+  },
+  bottom: {
+    in: {
+      y: '100%',
+      duration: 500,
+      opacity: 1
+    },
+    out: {
+      y: '100%',
+      duration: 300,
+      opacity: 1
+    }
+  },
+  left: {
+    in: {
+      x: '-100%',
+      duration: 500,
+      opacity: 1
+    },
+    out: {
+      x: '-100%',
+      duration: 300,
+      opacity: 1
+    }
+  },
+  right: {
+    in: {
+      x: '100%',
+      duration: 500,
+      opacity: 1
+    },
+    out: {
+      x: '100%',
+      duration: 300,
+      opacity: 1
     }
   }
-);
+};
+
+export type Side = VariantProps<typeof sheetVariants>['side'];
