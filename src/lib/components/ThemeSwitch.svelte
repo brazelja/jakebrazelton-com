@@ -1,8 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { Button } from '$components/ui/button';
   import clsx from 'clsx';
+
+  import { Button } from '$components/ui/button';
 
   let className: string | undefined | null = undefined;
   export { className as class };

@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import { PortableText } from '@portabletext/svelte';
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
@@ -16,7 +15,7 @@
     CardHeader,
     CardTitle
   } from '$components/ui/card';
-  import { UnorderedList, ListItem } from '$components/portable-text';
+  import { PortableText } from '$components/portable-text';
   import { cn } from '$lib/utils';
 
   import type { PageData } from './$types';
@@ -96,19 +95,7 @@
         </CardHeader>
         <Separator class="mb-4" />
         <CardContent class="p-4 !pt-0 md:p-6">
-          <PortableText
-            value={project.description}
-            components={{
-              list: {
-                // @ts-ignore
-                bullet: UnorderedList
-              },
-              listItem: {
-                // @ts-ignore
-                normal: ListItem
-              }
-            }}
-          />
+          <PortableText value={project.description} />
           {#if project?.images && project.images.length > 0}
             <div
               class="mt-4 flex h-40 flex-wrap items-center justify-center gap-4 sm:justify-start"

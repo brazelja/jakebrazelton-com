@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import { PortableText } from '@portabletext/svelte';
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
@@ -16,9 +15,10 @@
     CardTitle,
     CardFooter
   } from '$components/ui/card';
+  import { PortableText } from '$components/portable-text';
+  import { cn } from '$lib/utils';
 
   import type { PageData } from './$types';
-  import { cn } from '$lib/utils';
 
   export let data: PageData;
 

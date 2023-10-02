@@ -10,11 +10,5 @@
 </script>
 
 <li>
-  {#each value.children as item (item._key)}
-    {#if item._type === 'span'}
-      {item.text}
-    {:else}
-      <slot />
-    {/if}
-  {/each}
+  <slot />
 </li>

@@ -4,11 +4,11 @@
   export let portableText: BlockComponentProps;
 
   $: ({ value } = portableText);
-  $: ({ style = 'normal' } = value);
+  $: ({ style = 'blockquote' } = value);
 </script>
 
-{#if style === 'normal'}
-  <p class="leading-7 [&:not(:first-child)]:mt-4"><slot /></p>
+{#if style === 'blockquote'}
+  <blockquote class="mt-6 border-l-2 pl-6 italic"><slot /></blockquote>
 {:else}
   <slot />
 {/if}
