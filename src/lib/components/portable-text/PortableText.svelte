@@ -22,18 +22,18 @@
       h1: Heading,
       h2: Heading,
       h3: Heading,
-      h4: Heading,
+      h4: Heading
     },
     marks: {
       code: Code,
-      link: Link,
+      link: Link
     },
     list: {
       bullet: List,
-      number: List,
+      number: List
     },
     listItem: {
-      normal: ListItem,
-    },
+      normal: ListItem
+    }
   }}
 />
