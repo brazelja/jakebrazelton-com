@@ -1,5 +1,17 @@
 # jakebrazelton-com
 
+## 0.2.0
+
+### Minor Changes
+
+- f4fc843: feat: refactor `/resume` into multiple sub-routes + mobile styling
+
+### Patch Changes
+
+- 32b051b: feat: optimize content loading by moving `/interests` content to Sanity
+- 976bf8c: fix: update shadcn files
+- bf9edeb: chore: updated dependencies + shadcn templates
+
 ## 0.1.0
 
 ### Minor Changes
