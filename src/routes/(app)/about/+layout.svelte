@@ -1,16 +1,23 @@
 <script lang="ts">
   import groq from 'groq';
-  import { createSelect, melt } from '@melt-ui/svelte';
-  import { CheckIcon, ChevronDownIcon, MenuIcon } from 'lucide-svelte';
-  import { fly } from 'svelte/transition';
+  import { MenuIcon } from 'lucide-svelte';
+  import { page } from '$app/stores';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
+  import { cn } from '$lib/utils';
+  import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+  } from '$lib/components/ui/select';
 
   import type { LayoutData } from './$types';
-  import { Avatar, AvatarFallback, AvatarImage } from '$components/ui/avatar';
-  import { page } from '$app/stores';
-  import { cn } from '$lib/utils';
+  import type { Selected } from 'bits-ui';
 
   export let data: LayoutData;
 
@@ -55,14 +62,11 @@
     }
   ];
 
-  const {
-    elements: { trigger, menu, option },
-    states: { valueLabel, open, value },
-    helpers: { isSelected }
-  } = createSelect({ forceVisible: true });
+  let selected: Selected<(typeof items)[number]['id']> | undefined;
 
   $: {
-    value.set($page.route.id);
+    const match = items.find(({ id }) => id === $page.route.id);
+    if (match) selected = { value: match.id, label: match.label };
   }
 </script>
 
@@ -86,45 +90,27 @@
 >
   <section class="grid grid-cols-1 md:grid-cols-[240px_auto] md:gap-4">
     <aside class="relative mb-4">
-      <button
-        class="flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
-        use:melt={$trigger}
-        aria-label="Food"
-      >
-        <span class="flex items-center gap-2">
-          <MenuIcon class="h-6 w-6" />
-          {$valueLabel ?? ''}
-        </span>
-        <ChevronDownIcon class="h-6 w-6" />
-      </button>
-      {#if $open}
-        <div
-          class={cn(
-            'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md slide-in-from-top-2',
-            {
-              'animate-in fade-in-0 zoom-in-95': open,
-              'animate-out fade-out-0 zoom-out-95': !open
-            }
-          )}
-          use:melt={$menu}
-          transition:fly={{ duration: 150, y: -5 }}
-        >
-          {#each items as { id, label }}
-            <a
-              href="/about/{label.toLowerCase()}"
-              class="relative flex w-full cursor-default select-none items-center rounded-sm py-3 pl-9 pr-2 outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-              use:melt={$option({ value: id, label: label })}
-            >
-              <span class="absolute left-2 flex h-5 w-5 items-center justify-center">
-                {#if $isSelected(id)}
-                  <CheckIcon class="h-5 w-5" />
-                {/if}
-              </span>
-              {label}
-            </a>
-          {/each}
-        </div>
-      {/if}
+      <!-- Mobile -->
+      <Select bind:selected onSelectedChange={(v) => (selected = v)}>
+        <SelectTrigger class="md:hidden">
+          <span class="flex items-center gap-2">
+            <MenuIcon class="h-6 w-6" />
+            <SelectValue />
+          </span>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {#each items as { id, label }}
+              <a href="/about/{label.toLowerCase()}">
+                <SelectItem value={id} {label} class="py-3">
+                  {label}
+                </SelectItem>
+              </a>
+            {/each}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <!-- Desktop -->
       <ul class="sticky top-24 hidden auto-rows-auto text-muted-foreground md:grid">
         {#each items as { id, label }}
           <li

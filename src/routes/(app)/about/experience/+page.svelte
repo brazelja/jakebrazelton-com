@@ -2,12 +2,11 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import { PortableText } from '@portabletext/svelte';
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
-  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
   import {
     Card,
     CardContent,
@@ -15,10 +14,11 @@
     CardHeader,
     CardTitle,
     CardFooter
-  } from '$components/ui/card';
+  } from '$lib/components/ui/card';
+  import { cn } from '$lib/utils';
+  import { PortableText } from '$lib/components/portable-text';
 
   import type { PageData } from './$types';
-  import { cn } from '$lib/utils';
 
   export let data: PageData;
 

@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import { dev } from '$app/environment';
   import { inject } from '@vercel/analytics';
+  import { ModeWatcher } from 'mode-watcher';
 
   import PreviewBanner from '$lib/components/PreviewBanner.svelte';
   import type { LayoutData } from './$types';
@@ -43,4 +44,5 @@
   <PreviewBanner {embedded} />
 {/if}
 
+<ModeWatcher />
 <slot />

@@ -2,14 +2,19 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import { PortableText } from '@portabletext/svelte';
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
-  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
-  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$components/ui/card';
-  import { UnorderedList, ListItem } from '$components/portable-text';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
+  import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
+  } from '$lib/components/ui/card';
+  import { PortableText } from '$lib/components/portable-text';
 
   import type { PageData } from './$types';
 
@@ -85,19 +90,7 @@
         </CardHeader>
         <Separator class="mb-4" />
         <CardContent class="p-4 !pt-0 md:p-6">
-          <PortableText
-            value={edu.details}
-            components={{
-              list: {
-                // @ts-ignore
-                bullet: UnorderedList
-              },
-              listItem: {
-                // @ts-ignore
-                normal: ListItem
-              }
-            }}
-          />
+          <PortableText value={edu.details} />
         </CardContent>
       </Card>
     </div>

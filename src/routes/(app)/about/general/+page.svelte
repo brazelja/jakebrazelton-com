@@ -1,14 +1,13 @@
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import { PortableText } from '@portabletext/svelte';
   import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from 'lucide-svelte';
   import groq from 'groq';
 
   import { previewSubscription } from '$lib/config/sanity';
-  import { Card, CardContent, CardHeader, CardTitle } from '$components/ui/card';
-  import { Separator } from '$components/ui/separator';
-  import { UnorderedList, ListItem, Paragraph } from '$components/portable-text';
+  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+  import { Separator } from '$lib/components/ui/separator';
+  import { PortableText } from '$lib/components/portable-text';
 
   import type { PageData } from './$types';
 
@@ -59,23 +58,7 @@
     </CardHeader>
     <Separator class="mb-4" />
     <CardContent class="p-4 !pt-0 md:p-6">
-      <PortableText
-        value={user.bio}
-        components={{
-          block: {
-            // @ts-ignore
-            normal: Paragraph
-          },
-          list: {
-            // @ts-ignore
-            bullet: UnorderedList
-          },
-          listItem: {
-            // @ts-ignore
-            normal: ListItem
-          }
-        }}
-      />
+      <PortableText value={user.bio} />
     </CardContent>
   </Card>
 </div>

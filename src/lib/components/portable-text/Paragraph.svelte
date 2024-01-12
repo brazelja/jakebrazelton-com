@@ -8,7 +8,7 @@
 </script>
 
 {#if style === 'normal'}
-  <p class="py-2"><slot /></p>
+  <p class="leading-7 [&:not(:first-child)]:mt-4"><slot /></p>
 {:else}
   <slot />
 {/if}

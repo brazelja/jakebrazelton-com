@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { Button } from '$components/ui/button';
+  import { MenuIcon } from 'lucide-svelte';
+
+  import { Button } from '$lib/components/ui/button';
   import {
     Sheet,
     SheetClose,
@@ -7,10 +9,9 @@
     SheetHeader,
     SheetTitle,
     SheetTrigger
-  } from '$components/ui/sheet';
-  import { MenuIcon } from 'lucide-svelte';
+  } from '$lib/components/ui/sheet';
+  import { Separator } from '$lib/components/ui/separator';
   import ThemeSwitch from './ThemeSwitch.svelte';
-  import Separator from './ui/separator/Separator.svelte';
 </script>
 
 <header
@@ -26,7 +27,7 @@
           <MenuIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" size="full">
+      <SheetContent side="left" class="w-full">
         <SheetHeader>
           <SheetTitle class="h-8">
             <SheetClose>
@@ -50,7 +51,6 @@
               About
             </a>
           </SheetClose>
-          <Separator />
         </nav>
       </SheetContent>
     </Sheet>
