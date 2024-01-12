@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
-import { setPreviewCookie } from '$lib/utils';
+
+import { setPreviewCookie } from '$lib/utils/preview-cookies';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
@@ -10,10 +11,10 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
   const type = allParams.get('type');
 
   // Check the secret.
-  if (secret !== incomingSecret) throw error(401, 'Invalid secret');
+  if (secret !== incomingSecret) error(401, 'Invalid secret');
 
   // Check if we have a type parameter.
-  if (!type) throw error(401, 'Missing type');
+  if (!type) error(401, 'Missing type');
 
   // Default redirect.
   let redirectPath = '/';
@@ -37,5 +38,5 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
     'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
   });
 
-  throw redirect(302, redirectPath);
+  redirect(302, redirectPath);
 };

@@ -1,8 +1,12 @@
 <script lang="ts">
   import groq from 'groq';
+  import { MenuIcon } from 'lucide-svelte';
+  import { page } from '$app/stores';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
+  import { cn } from '$lib/utils';
   import {
     Select,
     SelectContent,
@@ -10,13 +14,10 @@
     SelectItem,
     SelectTrigger,
     SelectValue
-  } from '$components/ui/select';
+  } from '$lib/components/ui/select';
 
   import type { LayoutData } from './$types';
-  import { Avatar, AvatarFallback, AvatarImage } from '$components/ui/avatar';
-  import { page } from '$app/stores';
-  import { cn } from '$lib/utils';
-  import type { ComponentProps } from 'svelte';
+  import type { Selected } from 'bits-ui';
 
   export let data: LayoutData;
 
@@ -36,42 +37,37 @@
 
   const items = [
     {
-      value: '/(app)/about/general',
+      id: '/(app)/about/general',
       label: 'General'
     },
     {
-      value: '/(app)/about/interests',
+      id: '/(app)/about/interests',
       label: 'Interests'
     },
     {
-      value: '/(app)/about/skills',
+      id: '/(app)/about/skills',
       label: 'Skills'
     },
     {
-      value: '/(app)/about/experience',
+      id: '/(app)/about/experience',
       label: 'Experience'
     },
     {
-      value: '/(app)/about/education',
+      id: '/(app)/about/education',
       label: 'Education'
     },
     {
-      value: '/(app)/about/projects',
+      id: '/(app)/about/projects',
       label: 'Projects'
     }
   ];
 
-  let selected: ComponentProps<Select>['selected'];
+  let selected: Selected<(typeof items)[number]['id']> | undefined;
 
   $: {
-    if ($page.route.id) {
-      const item = items.find((item) => item.value === $page.route.id);
-      if (item) selected = item;
-    }
+    const match = items.find(({ id }) => id === $page.route.id);
+    if (match) selected = { value: match.id, label: match.label };
   }
-
-  const isSelectOption = (value: unknown): value is ComponentProps<Select>['selected'] =>
-    typeof value === 'object' && value !== null && 'value' in value && 'label' in value;
 </script>
 
 <div class="mx-auto w-full max-w-[1400px] px-6 md:px-8">
@@ -95,20 +91,18 @@
   <section class="grid grid-cols-1 md:grid-cols-[240px_auto] md:gap-4">
     <aside class="relative mb-4">
       <!-- Mobile -->
-      <Select
-        {selected}
-        onSelectedChange={(v) => {
-          if (isSelectOption(v)) selected = v;
-        }}
-      >
-        <SelectTrigger class="w-full md:hidden">
-          <SelectValue />
+      <Select bind:selected onSelectedChange={(v) => (selected = v)}>
+        <SelectTrigger class="md:hidden">
+          <span class="flex items-center gap-2">
+            <MenuIcon class="h-6 w-6" />
+            <SelectValue />
+          </span>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {#each items as { value, label }}
+            {#each items as { id, label }}
               <a href="/about/{label.toLowerCase()}">
-                <SelectItem {value} {label} class="py-3">
+                <SelectItem value={id} {label} class="py-3">
                   {label}
                 </SelectItem>
               </a>
@@ -118,11 +112,11 @@
       </Select>
       <!-- Desktop -->
       <ul class="sticky top-24 hidden auto-rows-auto text-muted-foreground md:grid">
-        {#each items as { value, label }}
+        {#each items as { id, label }}
           <li
             class={cn(
               'rounded transition-colors hover:cursor-pointer hover:bg-muted hover:text-foreground',
-              { 'text-foreground': $page.route.id === value }
+              { 'text-foreground': $page.route.id === id }
             )}
           >
             <a href="/about/{label.toLowerCase()}" class="inline-block w-full px-3 py-2">{label}</a>

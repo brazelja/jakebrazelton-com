@@ -1,9 +1,10 @@
 <script lang="ts">
   import { toPlainText, type BlockComponentProps } from '@portabletext/svelte';
-  import type { PortableTextBlock } from 'sanity';
   import { LinkIcon } from 'lucide-svelte';
+  import type { PortableTextBlock } from 'sanity';
 
-  import { cn, slugify } from '$lib/utils';
+  import { slugify } from '$lib/utils/slugify';
+  import { cn } from '$lib/utils';
 
   export let portableText: BlockComponentProps;
 

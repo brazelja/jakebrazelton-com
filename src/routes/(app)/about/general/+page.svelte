@@ -5,9 +5,9 @@
   import groq from 'groq';
 
   import { previewSubscription } from '$lib/config/sanity';
-  import { Card, CardContent, CardHeader, CardTitle } from '$components/ui/card';
-  import { Separator } from '$components/ui/separator';
-  import { PortableText } from '$components/portable-text';
+  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+  import { Separator } from '$lib/components/ui/separator';
+  import { PortableText } from '$lib/components/portable-text';
 
   import type { PageData } from './$types';
 

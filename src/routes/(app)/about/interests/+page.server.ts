@@ -19,7 +19,7 @@ export const load = (async ({ parent }) => {
   return {
     previewMode,
     initialData: {
-      interests: interests
+      interests
     },
     topArtists: spotifyClient.getArtists(),
     repositories: githubClient.getStarredRepos(),

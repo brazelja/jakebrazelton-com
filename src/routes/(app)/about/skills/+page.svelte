@@ -6,10 +6,10 @@
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
-  import { Input } from '$components/ui/input';
-  import { Avatar, AvatarImage } from '$components/ui/avatar';
-  import { Card, CardContent, CardHeader, CardTitle } from '$components/ui/card';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Input } from '$lib/components/ui/input';
+  import { Avatar, AvatarImage } from '$lib/components/ui/avatar';
+  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 
   import type { PageData } from './$types';
 

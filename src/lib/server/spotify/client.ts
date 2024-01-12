@@ -32,13 +32,13 @@ const authenticate = async () => {
 };
 
 const TOP_ARTISTS = [
+  '0OSw9it2MM9CxLC6WOhgEd', // Abandoned Pools
+  '2fSaE6BXtQy0x7R7v9IOmZ', // Aesop Rock
   '0FZcPgWI3BsFQl4rOAGSHT', // Make Them Suffer
   '19I4tYiChJoxEO5EuviXpz', // AFI
-  '21Gcs1QTxaZxwNJls2OZs7', // Four Fists
   '3hyGGjxu73JuzBa757H6R5', // The Mountain Goats
-  '3AA28KZvwAUcZuOKwyblJQ', // Gorillaz
   '6xG7V5GWf6QWQu1EFL3WJ8', // Royal Coda
-  '6vXYoy8ouRVib302zxaxFF', // Lorna Shore
+  '3Ca8UhvMDcgM1zyfAZGw3M', // SKYND
   '3ZztVuWxHzNpl0THurTFCv', // Architects
   '1TJbmc7jTpw78GKCiMpvDh', // Blue October
   '6P5ccCJCe8A4s9tDSTNFzF' // Fleshwater

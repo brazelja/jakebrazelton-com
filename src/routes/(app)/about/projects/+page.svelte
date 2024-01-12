@@ -5,8 +5,8 @@
   import groq from 'groq';
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
-  import { Separator } from '$components/ui/separator';
-  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
   import {
     Card,
     CardContent,
@@ -14,9 +14,9 @@
     CardFooter,
     CardHeader,
     CardTitle
-  } from '$components/ui/card';
-  import { PortableText } from '$components/portable-text';
+  } from '$lib/components/ui/card';
   import { cn } from '$lib/utils';
+  import { PortableText } from '$lib/components/portable-text';
 
   import type { PageData } from './$types';
 

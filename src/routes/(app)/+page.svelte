@@ -1,7 +1,7 @@
 <script lang="ts">
   import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from 'lucide-svelte';
 
-  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
+  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
   import { urlForImage } from '$lib/config/sanity';
 
   import type { PageData } from './$types';

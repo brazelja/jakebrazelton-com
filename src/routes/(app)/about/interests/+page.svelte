@@ -7,9 +7,10 @@
 
   import { previewSubscription, urlForImage } from '$lib/config/sanity';
   import { formatNumber } from '$lib/utils/format-number';
-  import { Separator } from '$components/ui/separator';
-  import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$components/ui/card';
-  import { Avatar, AvatarImage, AvatarFallback } from '$components/ui/avatar';
+  import { Separator } from '$lib/components/ui/separator';
+  import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$lib/components/ui/card';
+  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
+  import { Skeleton } from '$lib/components/ui/skeleton';
 
   import type { PageData } from './$types';
 
@@ -52,23 +53,37 @@
     <Separator class="mb-4" />
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid auto-rows-fr grid-cols-2 justify-items-center gap-6 md:grid-cols-5">
-        {#each topArtists as artist (artist.id)}
-          <a
-            href={artist.external_urls.spotify}
-            class="w-full max-w-[11.5rem] rounded bg-muted/50 p-4 transition-colors hover:cursor-pointer hover:bg-muted"
-          >
-            <Avatar class="mx-auto mb-4 h-28 w-28 md:h-36 md:w-36">
-              <AvatarImage src={artist.images[0].url} alt={artist.name} />
-              <AvatarFallback>
-                <img src={artist.images.at(-1)?.url ?? ''} alt={artist.name} />
-              </AvatarFallback>
-            </Avatar>
-            <div class="min-h-[4rem]">
-              <p class="pb-1 text-start text-sm font-semibold md:text-base">{artist.name}</p>
-              <p class="text-start text-xs font-semibold text-foreground/50">Artist</p>
-            </div>
-          </a>
-        {/each}
+        {#await topArtists}
+          {#each new Array(10) as _}
+            <span
+              class="w-full max-w-[11.5rem] rounded bg-muted/50 p-4 transition-colors hover:cursor-pointer hover:bg-muted"
+            >
+              <Skeleton class="mx-auto mb-4 h-28 w-28 rounded-full md:h-36 md:w-36" />
+              <div class="min-h-[4rem]">
+                <Skeleton class="mb-1 h-5" />
+                <Skeleton class="h-3 w-1/4" />
+              </div>
+            </span>
+          {/each}
+        {:then artists}
+          {#each artists as artist (artist.id)}
+            <a
+              href={artist.external_urls.spotify}
+              class="w-full max-w-[11.5rem] rounded bg-muted/50 p-4 transition-colors hover:cursor-pointer hover:bg-muted"
+            >
+              <Avatar class="mx-auto mb-4 h-28 w-28 md:h-36 md:w-36">
+                <AvatarImage src={artist.images[0].url} alt={artist.name} />
+                <AvatarFallback>
+                  <img src={artist.images.at(-1)?.url ?? ''} alt={artist.name} />
+                </AvatarFallback>
+              </Avatar>
+              <div class="min-h-[4rem]">
+                <p class="pb-1 text-start text-sm font-semibold md:text-base">{artist.name}</p>
+                <p class="text-start text-xs font-semibold text-foreground/50">Artist</p>
+              </div>
+            </a>
+          {/each}
+        {/await}
       </div>
     </CardContent>
   </Card>
@@ -82,48 +97,70 @@
     <Separator class="mb-4" />
     <CardContent class="p-4 !pt-0 md:p-6">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {#each repositories as repo (repo.id)}
-          <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="contents">
+        {#await repositories}
+          {#each new Array(10) as _}
             <Card class="flex flex-col transition-colors hover:bg-muted/50">
-              <CardHeader class="p-3">
+              <CardHeader class="flex p-3">
                 <CardTitle class="flex items-center gap-2">
-                  <BookMarkedIcon class="h-6 w-6" />
-                  {repo.full_name}
-                  <span
-                    class="rounded-full border px-2 text-xs leading-snug text-foreground/50 sm:text-sm"
-                  >
-                    Public
-                  </span>
+                  <Skeleton class="h-6 w-6" />
+                  <Skeleton class="h-5 w-1/2" />
+                  <Skeleton class="h-5 w-10 rounded-full border" />
                 </CardTitle>
               </CardHeader>
               <CardContent class="p-3 pt-0">
-                <p class="text-sm text-foreground/50">{repo.description}</p>
+                <Skeleton class="h-12" />
               </CardContent>
-              <CardFooter class="mt-auto p-3 pt-0 text-foreground/50">
-                <span class="inline-flex items-center gap-1">
-                  <span
-                    class={clsx('h-3 w-3 rounded-full border', {
-                      'bg-[#3178c6]': repo.language === 'TypeScript',
-                      'bg-[#f1e05a]': repo.language === 'JavaScript',
-                      'bg-[#e34c26]': repo.language === 'HTML',
-                      'bg-[#dea584]': repo.language === 'Rust',
-                      'bg-[#555555]': repo.language === 'C'
-                    })}
-                  />
-                  {repo.language}
-                </span>
-                <span class="ml-4 inline-flex items-center gap-1">
-                  <StarIcon class="h-5 w-5" />
-                  {formatNumber(repo.stargazers_count, 1)}
-                </span>
-                <span class="ml-4 inline-flex items-center gap-1">
-                  <GitForkIcon class="h-5 w-5" />
-                  {formatNumber(repo.forks_count, 1)}
-                </span>
+              <CardFooter class="mt-auto gap-1 p-3 pt-0">
+                <Skeleton class="h-5 w-1/4 border" />
+                <Skeleton class="h-5 w-1/6 border" />
+                <Skeleton class="h-5 w-1/6 border" />
               </CardFooter>
             </Card>
-          </a>
-        {/each}
+          {/each}
+        {:then repos}
+          {#each repos as repo (repo.id)}
+            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="contents">
+              <Card class="flex flex-col transition-colors hover:bg-muted/50">
+                <CardHeader class="p-3">
+                  <CardTitle class="flex items-center gap-2">
+                    <BookMarkedIcon class="h-6 w-6" />
+                    {repo.full_name}
+                    <span
+                      class="rounded-full border px-2 text-xs leading-snug text-foreground/50 sm:text-sm"
+                    >
+                      Public
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent class="p-3 pt-0">
+                  <p class="text-sm text-foreground/50">{repo.description}</p>
+                </CardContent>
+                <CardFooter class="mt-auto p-3 pt-0 text-foreground/50">
+                  <span class="inline-flex items-center gap-1">
+                    <span
+                      class={clsx('h-3 w-3 rounded-full border', {
+                        'bg-[#3178c6]': repo.language === 'TypeScript',
+                        'bg-[#f1e05a]': repo.language === 'JavaScript',
+                        'bg-[#e34c26]': repo.language === 'HTML',
+                        'bg-[#dea584]': repo.language === 'Rust',
+                        'bg-[#555555]': repo.language === 'C'
+                      })}
+                    />
+                    {repo.language}
+                  </span>
+                  <span class="ml-4 inline-flex items-center gap-1">
+                    <StarIcon class="h-5 w-5" />
+                    {formatNumber(repo.stargazers_count, 1)}
+                  </span>
+                  <span class="ml-4 inline-flex items-center gap-1">
+                    <GitForkIcon class="h-5 w-5" />
+                    {formatNumber(repo.forks_count, 1)}
+                  </span>
+                </CardFooter>
+              </Card>
+            </a>
+          {/each}
+        {/await}
       </div>
     </CardContent>
   </Card>
